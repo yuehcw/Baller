@@ -1,0 +1,12 @@
+.left-menu {
+    margin-left: 5%;
+    display: flex;
+    align-items: center;
+}
+
+.right-menu {
+    font-family: "Impact";
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
