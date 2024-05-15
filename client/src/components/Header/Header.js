@@ -1,51 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu } from "antd";
-import { HomeOutlined, ShopOutlined } from "@ant-design/icons";
 import "./Header.css";
 
 const Header = () => {
+  const [activeItem, setActiveItem] = useState("home");
   const navigate = useNavigate();
-  const handleHomeClick = () => {
-    navigate("/");
-  };
 
-  const handleMarketClick = () => {
-    navigate("/market");
+  const handleItemClick = (key) => {
+    setActiveItem(key);
+    navigate(`/${key}`);
   };
 
   return (
-    <Menu
-      theme="dark"
-      mode="horizontal"
-      selectable={false}
-      style={{ lineHeight: "120px", height: "120px" }}
-    >
-      <div className="left-menu">
-        <Menu.Item
-          key="home"
-          icon={<HomeOutlined style={{ fontSize: "30px" }} />}
-          onClick={() => handleHomeClick()}
-          style={{ marginRight: "20%" }}
-        />
-        <Menu.Item
-          key="marketplace"
-          icon={<ShopOutlined style={{ fontSize: "30px" }} />}
-          onClick={() => handleMarketClick()}
-        />
+    <div className="menu-container">
+      <div className="menu-left">
+        <img src="/path/to/logo.png" alt="Logo" className="logo" />
       </div>
-      <div className="right-menu">
-        <Menu.Item key="howitworks" style={{ fontSize: "20px" }}>
-          How It Works
-        </Menu.Item>
-        <Menu.Item key="login" style={{ fontSize: "20px" }}>
-          Login
-        </Menu.Item>
-        <Menu.Item key="signup" style={{ fontSize: "20px" }}>
-          Sign Up
-        </Menu.Item>
+      <div className="menu-center">
+        <div
+          className={`menu-item ${activeItem === "home" ? "active" : ""}`}
+          onClick={() => handleItemClick("home")}
+        >
+          Home
+        </div>
+        <div
+          className={`menu-item ${activeItem === "myteam" ? "active" : ""}`}
+          onClick={() => handleItemClick("myteam")}
+        >
+          My Team
+        </div>
+        <div
+          className={`menu-item ${activeItem === "howtoplay" ? "active" : ""}`}
+          onClick={() => handleItemClick("howtoplay")}
+        >
+          How to Play
+        </div>
       </div>
-    </Menu>
+      <div className="menu-right">
+        <div className="menu-item" onClick={() => handleItemClick("signin")}>
+          Sign In
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,17 +1,20 @@
 const express = require("express");
-const { fetchNBANews, fetchNBAPlayers } = require("../../services/nbaService");
-
 const router = express.Router();
+const NBAPlayer = require("../../models/nbaPlayer")
 
 router.get("/nba-news", async (req, res) => {
-  const nbaNews = await fetchNBANews();
-  res.json(nbaNews);
+  const cachedNews = req.newsCache.get("nbaNews");
+  if (cachedNews) {
+    res.json(cachedNews);
+  } else {
+    res.status(500).json({ error: "NBA news data not available" });
+  }
 });
 
-// router.get("/nba-players", async (req, res) => {
-//   const { team, season } = req.query;
-//   const nbaPlayers = await fetchNBAPlayers(team, season);
-//   res.json(nbaPlayers.response);
-// });
+router.get("/nba-players", async (req, res) => {
+  try {
 
-module.exports = router;
+  }
+})
+
+router.get("/nba-")

@@ -14,9 +14,10 @@ async function fetchAllTeamsData(year) {
   }
 
   try {
-    const totalTeams = 31;
-    const totalDuration = 240000; // 4 minutes in milliseconds
+    const totalTeams = 41;
+    const totalDuration = 360000; // 6 minutes in milliseconds
     const interval = totalDuration / totalTeams;
+    let team;
 
     for (let teamId = 1; teamId <= totalTeams; teamId++) {
       setTimeout(

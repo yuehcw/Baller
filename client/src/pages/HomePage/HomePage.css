@@ -29,7 +29,6 @@ a {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "Arial Black";
     position: absolute;
     height:auto;
     width: auto;
@@ -45,19 +44,29 @@ a {
     z-index: 1;
 }
 
+.homepage-image-text-overlay-body {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+}
+
 .homepage-content {
+    background-color: #11131A;;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.homepage-nba-news {
-    font-family: "Tahoma";
-}
 
 .homepage-start-button {
-    font-size: 18px;
-    margin: 50px;
-    font-family: "Arial Black";
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }

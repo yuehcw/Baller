@@ -1,7 +1,7 @@
 .app {
     position: relative;
     overflow-x: hidden;
-    background-color: #001529;
+    background-color: #11131A;
 }
 
 .app-header {
@@ -11,8 +11,8 @@
 }
 
 .app-content {
-    min-height: calc(100vh - 220px);
     margin-top: 120px;
+    min-height: calc(100vh - 220px);
 }
 
 .app-footer {

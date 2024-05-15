@@ -1,7 +1,7 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
-import MarketPage from "./pages/MarketPage/MarketPage";
+import MyTeamPage from "./pages/MyTeamPage/MyTeamPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
@@ -15,8 +15,8 @@ const App = () => {
         </div>
         <div className="app-content">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/market" element={<MarketPage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/myteam" element={<MyTeamPage />} />
           </Routes>
         </div>
         <div className="app-footer">

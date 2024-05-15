@@ -1,0 +1,13 @@
+.main-content {
+    display: flex;
+    padding: 50px;
+}
+
+.left-panel {
+    flex: 1.5;
+    color: #f8f9fa;
+}
+
+.right-panel {
+    flex: 1;
+}

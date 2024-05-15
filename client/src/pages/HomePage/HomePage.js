@@ -5,7 +5,7 @@ import { TinyColor } from "@ctrl/tinycolor";
 import nba_homepage from "../../image/image-nba-homepage.jpeg";
 import "./HomePage.css";
 
-function HomePage(props) {
+const HomePage = () => {
   const [nbaNews, setNBANews] = useState([]);
   const [nbaPlayers, setNBAPlayers] = useState([]);
   const colors1 = ["#6253E1", "#04BEFE"];
@@ -27,25 +27,6 @@ function HomePage(props) {
     fetchNBANews();
   }, []);
 
-  useEffect(() => {
-    const fetchNBAPlayers = async () => {
-      try {
-        const response = await axios.get("/nba/nba-players");
-        // Assuming the array of players is directly under response.data
-        if (Array.isArray(response.data)) {
-          setNBAPlayers(response.data);
-        } else {
-          // Handle case where data is not an array
-          console.error("Received data is not an array", response.data);
-        }
-      } catch (error) {
-        console.error("Error fetching NBA seasons:", error);
-      }
-    };
-
-    fetchNBAPlayers();
-  }, []);
-
   return (
     <div className="homepage-content">
       <div className="homepage-image-section">
@@ -53,7 +34,7 @@ function HomePage(props) {
         <div className="homepage-image-text-overlay">
           <h1>REVOLUTION BEGINS⚡️</h1>
           <h1>The Game-Changer in Basketball Trading</h1>
-          <h3>
+          <h3 className="homepage-image-text-overlay-body">
             Join the revolution and trade your beloved players in this unique
             stock market.
           </h3>
@@ -99,6 +80,6 @@ function HomePage(props) {
       </div>
     </div>
   );
-}
+};
 
 export default HomePage;

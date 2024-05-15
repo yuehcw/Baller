@@ -1,9 +1,8 @@
 const axios = require("axios");
 const NBAPlayer = require("../models/nbaPlayer");
 const { calculatePlayerIndex } = require("../utils/calculateIndex");
-let cachedData = {};
 
-const fetchNBANews = async (limit = 5) => {
+const fetchNBANews = async (cache) => {
   try {
     const response = await axios.get(
       "https://nba-latest-news.p.rapidapi.com/articles",
@@ -15,43 +14,14 @@ const fetchNBANews = async (limit = 5) => {
         },
       },
     );
-    const responseData = response.data.slice(0, limit);
-    return responseData;
+    const responseData = response.data.slice(0, 5);
+    cache.set("nbaNews", responseData);
+    console.log(
+      `[${new Date().toISOString()}] NBA news data updated in cache.`,
+    );
   } catch (error) {
     console.error("Error fetching NBA news:", error);
     throw error;
-  }
-};
-
-// Not Using Anymore
-const fetchNBAPlayersBIOData = async (team, season) => {
-  try {
-    const response = await axios.get(
-      "https://api-nba-v1.p.rapidapi.com/players",
-      {
-        headers: {
-          "X-RapidAPI-Key":
-            "c609279aa4msh8fe9e6d486fa636p11b262jsn6b759e501420",
-          "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
-        },
-        params: {
-          team: team,
-          season: season,
-        },
-      },
-    );
-
-    const playersData = response.data.response.map((player) => ({
-      playerId: player.id,
-      firstName: player.firstname,
-      lastName: player.lastname,
-    }));
-
-    await NBAPlayer.insertMany(playersData);
-    console.log("Data successfully stored to MongoDB");
-  } catch (error) {
-    console.error("Error fetching NBA Players:", error);
-    cachedData = {};
   }
 };
 
@@ -158,6 +128,5 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
 
 module.exports = {
   fetchNBANews,
-  fetchNBAPlayersBIOData,
   fetchNBAPLayerSTATSData,
 };

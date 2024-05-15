@@ -35,6 +35,7 @@ const playerSchema = new mongoose.Schema(
     },
     currentTeam: teamSchema,
     seasons: [seasonStatSchema],
+    headshotUrl: String,
   },
   { timestamps: true },
 );

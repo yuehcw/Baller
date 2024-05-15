@@ -1,0 +1,14 @@
+.player-grid-list {
+    padding: 20px;
+}
+
+.player-grid-list h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.player-grid-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}

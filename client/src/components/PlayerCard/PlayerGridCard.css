@@ -1,0 +1,27 @@
+.player-grid-card {
+    background: #1a1a2e;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: 200px;
+}
+
+.player-grid-card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.player-grid-card .player-info {
+    margin-top: 10px;
+}
+
+.player-grid-card h3 {
+    color: white;
+    margin: 10px 0 5px 0;
+}
+
+.player-grid-card p {
+    color: white;
+    margin: 0;
+}
