@@ -49,6 +49,10 @@
     color: #1890ff; /* Change color on hover */
 }
 
+.menu-item.active {
+    color: #1890ff;
+}
+
 .menu-item.active::after {
     background-color: #1890ff; /* Adjust the active underline color */
 }

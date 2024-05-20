@@ -54,7 +54,7 @@ const SearchPlayers = () => {
                 <span className="search-players-search-button-text-title">
                   Price
                 </span>
-                Button
+                All
               </Space>
               <DownOutlined className="search-players-down" />
             </div>
@@ -67,7 +67,7 @@ const SearchPlayers = () => {
                 <span className="search-players-search-button-text-title">
                   Position
                 </span>
-                Button
+                All
               </Space>
               <DownOutlined className="search-players-down" />
             </div>

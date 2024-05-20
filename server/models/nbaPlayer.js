@@ -4,6 +4,7 @@ const teamSchema = new mongoose.Schema(
   {
     teamId: Number,
     name: String,
+    teamLogo: String,
   },
   { _id: false },
 );
@@ -32,6 +33,24 @@ const playerSchema = new mongoose.Schema(
     lastName: {
       type: String,
       required: true,
+    },
+    number: {
+      type: String,
+    },
+    position: {
+      type: String,
+    },
+    height: {
+      type: String,
+    },
+    weight: {
+      type: String,
+    },
+    lastAttended: {
+      type: String,
+    },
+    country: {
+      type: String,
     },
     currentTeam: teamSchema,
     seasons: [seasonStatSchema],

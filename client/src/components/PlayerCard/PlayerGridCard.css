@@ -4,24 +4,25 @@
     padding: 20px;
     text-align: center;
     width: 200px;
+    position: relative;
 }
 
 .player-grid-card img {
-    border-radius: 50%;
+    border-radius: 10px;
     width: 100px;
-    height: 100px;
+    height: auto;
 }
 
-.player-grid-card .player-info {
+.player-grid-info {
     margin-top: 10px;
 }
 
-.player-grid-card h3 {
+.player-grid-info h3 {
     color: white;
     margin: 10px 0 5px 0;
 }
 
-.player-grid-card p {
+.player-grid-info p {
     color: white;
     margin: 0;
 }

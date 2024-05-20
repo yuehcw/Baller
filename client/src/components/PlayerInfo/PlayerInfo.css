@@ -1,0 +1,87 @@
+/* PlayerInfo.css */
+
+.player-info {
+    background-color: #1a1b1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #f8f9fa;
+}
+
+.player-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.14); /* 边框颜色 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* 阴影效果 */
+}
+
+.player-info-name-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.player-info-team-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-details {
+    margin-top: 20px;
+    margin-left: 15px;
+    margin-right: 30px;
+}
+
+.player-details-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-details p {
+    margin: 5px 0;
+}
+
+.player-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+
+}
+
+.player-add-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    width: 75%;
+    height: 50px;
+    box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.15),  /* 第一层阴影 */
+            0 8px 16px rgba(0, 0, 0, 0.2), /* 第二层阴影 */
+            0 12px 24px rgba(0, 0, 0, 0.25); /* 第三层阴影 */
+}
+
+.player-add-tolist {
+    border: 2px solid #1677FF;
+    background-color: #1a1b1e;
+    min-height: 50px;
+    min-width: 18%;
+    box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.15),  /* 第一层阴影 */
+            0 8px 16px rgba(0, 0, 0, 0.2), /* 第二层阴影 */
+            0 12px 24px rgba(0, 0, 0, 0.25); /* 第三层阴影 */
+}
+
+.ant-ribbon {
+    font-size: 25px; /* 您可以根据需要调整字体大小 */
+    padding: 10px 20px; /* 调整内边距 */
+}
+
+
+

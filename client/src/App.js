@@ -1,9 +1,10 @@
 import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage/HomePage";
-import MyTeamPage from "./pages/MyTeamPage/MyTeamPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import HomePage from "./pages/HomePage/HomePage";
+import MyTeamPage from "./pages/MyTeamPage/MyTeamPage";
+import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import "./App.css";
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
         </div>
         <div className="app-content">
           <Routes>
+            <Route path="/player/:id" element={<PlayerPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/myteam" element={<MyTeamPage />} />
           </Routes>

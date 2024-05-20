@@ -1,0 +1,68 @@
+/* Toolbar.css */
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.toolbar {
+    position: fixed;
+    bottom: 0;
+    height: 5%;
+    width: 100%;
+    padding: 20px;
+    background-color: #1A1B1E;
+    border-top: 3px solid #2f2f2f;
+    z-index: 1000; /* 确保工具栏在最上层 */
+    animation: slideInUp 0.5s ease-in-out;
+}
+
+.toolbar-row {
+    height: 100%;
+    text-align: center;
+}
+
+.toolbar-info-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 50px;
+    margin-left: 50px;
+}
+
+.toolbar-info-block {
+    text-align: center;
+}
+
+.toolbar-info-title {
+    color: #888888;
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.toolbar-info-value {
+    color: #f8f9fa;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.toolbar-button-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.continue-button {
+    width: 130px;
+    height: 100%;
+    font-size: 16px;
+    margin-right: 70px;
+}

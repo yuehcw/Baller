@@ -39,6 +39,7 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
           team: team,
           season: season,
         },
+        timeout: 5000,
       },
     );
 
@@ -57,6 +58,7 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
           currentTeam: {
             teamId: team,
             name: gameStats.team.name, // Assuming team name is available in the gameStats
+            teamLogo: gameStats.team.logo,
           },
           seasons: [],
         });
@@ -65,6 +67,7 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
         player.currentTeam = {
           teamId: team,
           name: gameStats.team.name, // Assuming team name is available in the gameStats
+          teamLogo: gameStats.team.logo,
         };
       }
 

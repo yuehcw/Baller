@@ -12,10 +12,11 @@
 }
 
 .player-list-title {
+    font-size: 17px;
     display: flex;
     align-items: center;
     margin-right: 50px;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 
@@ -29,7 +30,7 @@
 .player-list-title-team {
     display: flex;
     align-items: center;
-    width: 220px; /* 設置固定寬度 */
+    width: 222px; /* 設置固定寬度 */
     justify-content: flex-start;
     color: #f8f9fa;
 }
@@ -37,7 +38,61 @@
 .player-list-title-price {
     display: flex;
     align-items: center;
-    width: 90px; /* 設置固定寬度 */
+    width: 80px; /* 設置固定寬度 */
     justify-content: flex-start;
     color: #f8f9fa;
+}
+
+/* PlayerList.css */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination .ant-pagination-item {
+    background-color: #1A1B1E;
+    border: 1px solid #2f2f2f;
+    color: #f8f9fa;
+}
+
+.pagination .ant-pagination-item-active {
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
+
+.pagination .ant-pagination-item:hover {
+    border-color: #40a9ff;
+}
+
+.pagination .ant-pagination-item a {
+    color: #f8f9fa;
+}
+
+.pagination .ant-pagination-item-active a {
+    color: white;
+}
+
+.pagination .ant-pagination-prev, .pagination .ant-pagination-next {
+    color: #f8f9fa;
+}
+
+.pagination .ant-pagination-prev:hover, .pagination .ant-pagination-next:hover {
+    color: #40a9ff;
+}
+
+.pagination .ant-pagination-disabled a, .pagination .ant-pagination-disabled:hover a {
+    color: #ddd;
+}
+
+.pagination .ant-pagination-prev .ant-pagination-item-link, .pagination .ant-pagination-next .ant-pagination-item-link {
+    background-color: #1A1B1E;
+    border: 1px solid #2f2f2f;
+    color: #f8f9fa;
+}
+
+.pagination .ant-pagination-prev:hover .ant-pagination-item-link, .pagination .ant-pagination-next:hover .ant-pagination-item-link {
+    border-color: #40a9ff;
+    color: #40a9ff;
 }
