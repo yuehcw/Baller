@@ -5,8 +5,9 @@ if (process.env.NODE_ENV !== "production") {
 const express = require("express");
 const cron = require("node-cron");
 const NodeCache = require("node-cache");
+const cors = require("cors");
 const { fetchNBANews } = require("./services/nbaService");
-const nbaRoutes = require("./routes/nba/nbaRoutes");
+const nbaRoutes = require("./routes/nbaRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -14,6 +15,13 @@ const PORT = process.env.PORT || 5000;
 const newsCache = new NodeCache({ stdTTL: 3600, checkperiod: 120 }); // Cache TTL set to 1 hour
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 // Make the cache available to the routes
 app.use((req, res, next) => {
   req.newsCache = newsCache;
@@ -24,15 +32,11 @@ const mongoose = require("mongoose");
 mongoose
   .connect(process.env.DATABASE_URL)
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB and Mongoose.");
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB:", err);
   });
-
-const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to Mongoose"));
 
 // Schedule the job to run every hour
 cron.schedule("0 * * * *", async () => {

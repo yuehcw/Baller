@@ -32,8 +32,8 @@ const PlayerListCard = ({ player, selected, onSelect }) => {
         type="primary"
         shape="circle"
         icon={selected ? <CheckOutlined /> : <PlusOutlined />}
-        oonClick={(e) => {
-          e.stopPropagation(); // 防止触发父元素的点击事件
+        onClick={(e) => {
+          e.stopPropagation();
           onSelect(player.id);
         }}
       />

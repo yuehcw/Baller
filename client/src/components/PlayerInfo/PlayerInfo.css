@@ -1,6 +1,7 @@
 /* PlayerInfo.css */
 
 .player-info {
+    height: 100%;
     background-color: #1a1b1e;
     padding: 20px;
     border-radius: 10px;

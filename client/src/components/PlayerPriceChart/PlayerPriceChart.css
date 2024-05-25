@@ -1,6 +1,6 @@
-/* PriceChart.css */
-
 .price-chart {
+    height: 100%;
+    width: 100%;
     background-color: #1a1b1e;
     padding: 20px;
     border-radius: 10px;
@@ -13,10 +13,8 @@
 }
 
 .chart {
-    height: 200px;
-    background-color: #2a2b2e;
+    height: 400px;
+    width: 100%;
+    background-color: #1a1b1e;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }

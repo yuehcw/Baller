@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider, Row, Col } from "antd";
+import { Button, Row, Col } from "antd";
 import "./MyTeamToolbar.css";
 
 const MyTeamToolbar = ({ players, remainingBudget }) => {

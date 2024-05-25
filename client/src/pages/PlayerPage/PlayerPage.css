@@ -19,33 +19,36 @@
 }
 
 .player-card-left {
-    flex: 1 1 25%;
+    flex: 25%;
     padding: 10px;
 }
 
 .player-card-right {
-    flex: 3 1 75%;
+    flex: 75%;
     padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 .player-card-right-top {
-    flex: 1;
+    flex: 50%;
     display: flex;
     justify-content: center;
     border-radius: 10px;
 }
 
 .player-card-right-bottom {
-    flex: 1;
+    flex: 50%;
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
-.player-card-right-bottom > div {
-    flex: 1; /* 每个子元素占据50%的宽度 */
+.player-card-right-bottom > .price-chart {
+    flex: 7; /* 70% width */
 }
 
+.player-card-right-bottom > .stat-chart {
+    flex: 3; /* 30% width */
+}

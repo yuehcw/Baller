@@ -25,6 +25,33 @@ const fetchNBANews = async (cache) => {
   }
 };
 
+const fetchGameDataWithRetry = async (season, retries = 3) => {
+  try {
+    const response = await axios.get(
+      "https://api-nba-v1.p.rapidapi.com/games",
+      {
+        headers: {
+          "X-RapidAPI-Key":
+            "c609279aa4msh8fe9e6d486fa636p11b262jsn6b759e501420",
+          "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
+        },
+        params: { season: season },
+        timeout: 5000,
+      },
+    );
+    return response.data.response;
+  } catch (error) {
+    if (retries > 0) {
+      console.log(
+        `Retrying fetch for season ${season}. Retries left: ${retries - 1}`,
+      );
+      return fetchGameDataWithRetry(season, retries - 1);
+    } else {
+      throw error;
+    }
+  }
+};
+
 const fetchNBAPLayerSTATSData = async (team, season) => {
   try {
     const response = await axios.get(
@@ -35,94 +62,110 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
             "c609279aa4msh8fe9e6d486fa636p11b262jsn6b759e501420",
           "X-RapidAPI-Host": "api-nba-v1.p.rapidapi.com",
         },
-        params: {
-          team: team,
-          season: season,
-        },
+        params: { team, season },
         timeout: 5000,
       },
     );
 
-    for (const gameStats of response.data.response) {
-      let player = await NBAPlayer.findOne({
-        playerId: gameStats.player.id,
-      });
+    const gameStatsArray = response.data.response;
+
+    const gameData = await fetchGameDataWithRetry(season);
+    console.log(
+      `Fetched game data for season ${season}, total games: ${gameData.length}`,
+    );
+
+    for (const gameStats of gameStatsArray) {
+      let player = await NBAPlayer.findOne({ playerId: gameStats.player.id });
 
       if (!player) {
-        console.log("can't find player data");
-        // If the player does not exist, create a new one
+        console.log(`Creating new player with ID: ${gameStats.player.id}`);
         player = new NBAPlayer({
           playerId: gameStats.player.id,
-          firstName: gameStats.player.firstname, // Assuming these fields exist in the response
+          firstName: gameStats.player.firstname,
           lastName: gameStats.player.lastname,
           currentTeam: {
             teamId: team,
-            name: gameStats.team.name, // Assuming team name is available in the gameStats
+            name: gameStats.team.name,
             teamLogo: gameStats.team.logo,
           },
           seasons: [],
         });
       } else {
-        // Update player's current team information
         player.currentTeam = {
           teamId: team,
-          name: gameStats.team.name, // Assuming team name is available in the gameStats
+          name: gameStats.team.name,
           teamLogo: gameStats.team.logo,
         };
       }
 
-      // Find the specific season data or create if not exists
       let seasonData = player.seasons.find((s) => s.season === Number(season));
       if (!seasonData) {
-        console.log("can't find season data");
+        console.log(
+          `Creating new season data for player ID: ${gameStats.player.id}, season: ${season}`,
+        );
         seasonData = {
           season: season,
-          gameIds: [],
-          indices: [],
-          currentIndex: 0,
+          team: {
+            teamId: team,
+            name: gameStats.team.name,
+            teamLogo: gameStats.team.logo,
+          },
+          games: [],
         };
         player.seasons.push(seasonData);
       }
 
-      if (!seasonData.gameIds.includes(gameStats.game.id)) {
-        const index = calculatePlayerIndex({
-          points: gameStats.points,
-          offReb: gameStats.offReb,
-          defReb: gameStats.defReb,
-          assists: gameStats.assists,
-          steals: gameStats.steals,
-          blocks: gameStats.blocks,
-          turnovers: gameStats.turnovers,
-          plusMinus: gameStats.plusMinus,
-          fga: gameStats.fga,
-          fgp: gameStats.fgp,
-        });
+      if (!seasonData.games.some((game) => game.gameId === gameStats.game.id)) {
+        const gameInfo = gameData.find((game) => game.id === gameStats.game.id);
 
-        // Compute the new average
-        if (seasonData.indices.length === 0) {
-          seasonData.indices.push(index); // First index, just add it
-        } else {
-          // Compute the new average index
-          const totalIndices = seasonData.indices.length;
-          const lastAverage = seasonData.indices[totalIndices - 1]; // Get the last stored average
-          const newAverage =
-            (lastAverage * totalIndices + index) / (totalIndices + 1);
-          seasonData.indices.push(newAverage);
+        if (gameInfo) {
+          const index = calculatePlayerIndex({
+            points: gameStats.points,
+            offReb: gameStats.offReb,
+            defReb: gameStats.defReb,
+            assists: gameStats.assists,
+            steals: gameStats.steals,
+            blocks: gameStats.blocks,
+            turnovers: gameStats.turnovers,
+            plusMinus: gameStats.plusMinus,
+            fga: gameStats.fga,
+            fgp: gameStats.fgp,
+          });
+
+          console.log(
+            `Adding game data for player ID: ${gameStats.player.id}, game ID: ${gameStats.game.id}`,
+          );
+          seasonData.games.push({
+            gameId: gameStats.game.id,
+            gameDate: new Date(gameInfo.date.start),
+            points: gameStats.points,
+            offReb: gameStats.offReb,
+            defReb: gameStats.defReb,
+            assists: gameStats.assists,
+            steals: gameStats.steals,
+            blocks: gameStats.blocks,
+            turnovers: gameStats.turnovers,
+            plusMinus: gameStats.plusMinus,
+            fga: gameStats.fga,
+            fgp: gameStats.fgp,
+            index: index,
+          });
+
+          seasonData.games.sort((a, b) => a.gameId - b.gameId);
+
+          const totalIndices = seasonData.games.reduce(
+            (acc, game) => acc + game.index,
+            0,
+          );
+          player.currentIndex = totalIndices / seasonData.games.length;
+
+          await player.save();
+          console.log(
+            "Player season stats updated successfully for player ID:",
+            gameStats.player.id,
+          );
         }
-
-        // Update currentIndex to the latest average index
-        seasonData.currentIndex =
-          seasonData.indices[seasonData.indices.length - 1];
-
-        // Add the game ID to track which games have been processed
-        seasonData.gameIds.push(gameStats.game.id);
       }
-
-      await player.save();
-      console.log(
-        "Player season stats updated successfully for player ID:",
-        gameStats.player.id,
-      );
     }
   } catch (error) {
     console.error("Failed to fetch or update NBA Player Stats:", error);

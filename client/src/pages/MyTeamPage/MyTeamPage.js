@@ -13,7 +13,9 @@ const MyTeamPage = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get("/nba/nba-Players");
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/nba/nba-Players`,
+        );
         setPlayers(response.data);
       } catch (error) {
         console.error("Error fetching players:", error);

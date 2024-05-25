@@ -9,13 +9,30 @@ const teamSchema = new mongoose.Schema(
   { _id: false },
 );
 
+const gameSchema = new mongoose.Schema(
+  {
+    gameId: Number,
+    gameDate: Date,
+    points: Number,
+    offReb: Number,
+    defReb: Number,
+    assists: Number,
+    steals: Number,
+    blocks: Number,
+    turnovers: Number,
+    plusMinus: String,
+    fga: Number,
+    fgp: String,
+    index: Number,
+  },
+  { _id: false },
+);
+
 const seasonStatSchema = new mongoose.Schema(
   {
     season: Number,
     team: teamSchema,
-    gameIds: [Number],
-    indices: [Number],
-    currentIndex: Number,
+    games: [gameSchema],
   },
   { _id: false },
 );
@@ -34,24 +51,13 @@ const playerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    number: {
-      type: String,
-    },
-    position: {
-      type: String,
-    },
-    height: {
-      type: String,
-    },
-    weight: {
-      type: String,
-    },
-    lastAttended: {
-      type: String,
-    },
-    country: {
-      type: String,
-    },
+    number: String,
+    position: String,
+    height: String,
+    weight: String,
+    lastAttended: String,
+    country: String,
+    currentIndex: Number,
     currentTeam: teamSchema,
     seasons: [seasonStatSchema],
     headshotUrl: String,

@@ -109,27 +109,38 @@ async function scrapeCurrentPage(page) {
   console.log(`Extracted ${players.length} players.`);
 
   for (const player of players) {
+    if (!player.firstName || !player.lastName) {
+      console.log("Invalid player data:", player);
+      continue;
+    }
+
     console.log(
       `Extracted: ${player.firstName} ${player.lastName}, ${player.headshotUrl}, ${player.number}, ${player.position}, ${player.height}, ${player.weight}, ${player.lastAttended}, ${player.country}`,
     );
-    await NBAPlayer.updateOne(
-      {
-        firstName: player.firstName.trim(),
-        lastName: player.lastName.trim(),
-      },
-      {
-        $set: {
-          headshotUrl: player.headshotUrl,
-          number: player.number,
-          position: player.position,
-          height: player.height,
-          weight: player.weight,
-          lastAttended: player.lastAttended,
-          country: player.country,
+
+    try {
+      const result = await NBAPlayer.updateOne(
+        {
+          firstName: player.firstName.trim(),
+          lastName: player.lastName.trim(),
         },
-      },
-      { upsert: true },
-    );
+        {
+          $set: {
+            headshotUrl: player.headshotUrl,
+            number: player.number,
+            position: player.position,
+            height: player.height,
+            weight: player.weight,
+            lastAttended: player.lastAttended,
+            country: player.country,
+          },
+        },
+        { upsert: true },
+      );
+      console.log("Update result:", result);
+    } catch (error) {
+      console.error("Error updating player data:", error);
+    }
   }
 }
 

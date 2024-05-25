@@ -5,7 +5,6 @@ import axios from "axios";
 import PlayerInfo from "../../components/PlayerInfo/PlayerInfo";
 import PlayerPerformanceChart from "../../components/PlayerPerformanceChart/PlayerPerformanceChart";
 import PlayerPriceChart from "../../components/PlayerPriceChart/PlayerPriceChart";
-import PlayerStatistics from "../../components/PlayerStatistics/PlayerStatistics";
 import "./PlayerPage.css";
 import PlayerStatChart from "../../components/PlayerStatChart/PlayerStatChart";
 
@@ -16,7 +15,9 @@ const PlayerCard = () => {
   useEffect(() => {
     const fetchPlayer = async () => {
       try {
-        const response = await axios.get(`/nba/nba-Players/${id}`);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/nba/nba-Players/${id}`,
+        );
         setPlayer(response.data);
       } catch (error) {
         console.error("Error fetching player data:", error);

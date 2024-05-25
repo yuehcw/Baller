@@ -7,7 +7,7 @@ import "./HomePage.css";
 
 const HomePage = () => {
   const [nbaNews, setNBANews] = useState([]);
-  const [nbaPlayers, setNBAPlayers] = useState([]);
+  const [nbaPlayers] = useState([]);
   const colors1 = ["#6253E1", "#04BEFE"];
   const getHoverColors = (colors) =>
     colors.map((color) => new TinyColor(color).lighten(5).toString());
@@ -17,7 +17,9 @@ const HomePage = () => {
   useEffect(() => {
     const fetchNBANews = async () => {
       try {
-        const response = await axios.get("/nba/nba-news");
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/nba/nba-news`,
+        );
         setNBANews(response.data);
       } catch (error) {
         console.error("Error Client side fetching NBA news:", error);
