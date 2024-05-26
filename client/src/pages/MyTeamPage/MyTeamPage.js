@@ -9,6 +9,11 @@ import MyTeamToolbar from "../../components/MyTeamToolbar/MyTeamToolbar";
 const MyTeamPage = () => {
   const [players, setPlayers] = useState([]);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [priceRange, setPriceRange] = useState([
+    Number.NEGATIVE_INFINITY,
+    Number.POSITIVE_INFINITY,
+  ]);
+  const [positionFilter, setPositionFilter] = useState("");
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -34,11 +39,17 @@ const MyTeamPage = () => {
           <PlayerGridList title="Centers" players={players.slice(6, 9)} />
         </div>
         <div className="right-panel">
-          <SearchPlayers />
+          <SearchPlayers
+            players={players}
+            setPriceRange={setPriceRange}
+            setPositionFilter={setPositionFilter}
+          />
           <PlayerList
             players={players}
             selectedPlayer={selectedPlayer}
             setSelectedPlayer={setSelectedPlayer}
+            priceRange={priceRange}
+            positionFilter={positionFilter}
           />
         </div>
       </div>

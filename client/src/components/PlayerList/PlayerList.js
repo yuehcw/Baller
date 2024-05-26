@@ -1,11 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pagination } from "antd";
 import PlayerListCard from "../PlayerCard/PlayerListCard";
 import "./PlayerList.css";
 
-const PlayerList = ({ players, selectedPlayer, setSelectedPlayer, title }) => {
+const PlayerList = ({
+  players,
+  selectedPlayer,
+  setSelectedPlayer,
+  title,
+  priceRange,
+  positionFilter,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredPlayers, setFilteredPlayers] = useState([]);
   const playersPerPage = 10;
+
+  useEffect(() => {
+    const filtered = players.filter((player) => {
+      const inPriceRange =
+        player.currentIndex >= priceRange[0] &&
+        player.currentIndex < priceRange[1];
+      let inPosition = true;
+      if (positionFilter === "Guard") {
+        inPosition = player.position && player.position.includes("G");
+      } else if (positionFilter === "Forward") {
+        inPosition = player.position && player.position.includes("F");
+      } else if (positionFilter === "Center") {
+        inPosition = player.position && player.position.includes("C");
+      }
+      return inPriceRange && inPosition;
+    });
+    setFilteredPlayers(filtered);
+  }, [players, priceRange, positionFilter]);
 
   const handleSelect = (id) => {
     setSelectedPlayer(id === selectedPlayer ? null : id);
@@ -16,7 +42,7 @@ const PlayerList = ({ players, selectedPlayer, setSelectedPlayer, title }) => {
   };
 
   const startIndex = (currentPage - 1) * playersPerPage;
-  const selectedPlayers = players.slice(
+  const selectedPlayers = filteredPlayers.slice(
     startIndex,
     startIndex + playersPerPage,
   );
@@ -43,7 +69,7 @@ const PlayerList = ({ players, selectedPlayer, setSelectedPlayer, title }) => {
         <Pagination
           current={currentPage}
           pageSize={playersPerPage}
-          total={players.length}
+          total={filteredPlayers.length}
           onChange={handlePageChange}
           className="pagination"
           showSizeChanger={false}

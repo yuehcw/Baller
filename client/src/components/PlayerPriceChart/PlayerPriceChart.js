@@ -128,7 +128,7 @@ const PlayerPriceChart = ({ player }) => {
 
   return (
     <div className="price-chart">
-      <h2>Price chart</h2>
+      <h2>Monthly Avg. GC</h2>
       <ReactECharts option={chartData} className="chart" />
     </div>
   );

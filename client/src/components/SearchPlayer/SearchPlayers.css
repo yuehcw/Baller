@@ -1,3 +1,5 @@
+/* SearchPlayers.css */
+
 .search-players-header {
     color: #f8f9fa;
 }
@@ -12,17 +14,26 @@
 }
 
 .search-players-search-dropdown .ant-dropdown-menu {
-    background-color: #f8f9fa;
+    background-color: #1a1a2e;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.search-players input {
-    width: 100%;
-    padding: 10px;
+.search-players-search-dropdown .ant-dropdown-menu-item {
+    font-size: 18px !important;
+    margin-bottom: 15px !important;
+    color: #f8f9fa !important;
 }
 
+.search-players-search-dropdown .ant-dropdown-menu-item:hover {
+    color: #1a1a2e !important;
+    background-color: #f8f9fa !important;
+}
 
-.add-player-btn:hover {
-    background-color: #40a9ff;
+.search-players-search-dropdown .ant-dropdown-menu-item-active {
+    color: #1a1a2e !important;
+    background-color: #f8f9fa !important;
 }
 
 .search-players-search-button {

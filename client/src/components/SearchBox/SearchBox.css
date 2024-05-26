@@ -21,18 +21,28 @@
     color: white;
 }
 
-.search-input {
-    width: 100%;
-    height: 100%;
-    border: none;
-    outline: none;
-    padding: 0 10px;
-    font-size: 16px;
-    color: white;
-    background-color: transparent;
-    text-align: left;
+.search-input:focus {
+    border: transparent;
+    box-shadow: none;
 }
 
-.search-input::placeholder {
-    color: #bbb;
+.ant-select-dropdown {
+    background-color: #1a1a2e !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.ant-select-item {
+    color: white !important;
+    margin-bottom: 10px !important;
+}
+
+.ant-select-item:hover {
+    color: #1a1a2e !important;
+    background-color: #f8f9fa !important;
+}
+
+.ant-select-item-option-active {
+    color: #1a1a2e !important;
+    background-color: #f8f9fa !important;
 }

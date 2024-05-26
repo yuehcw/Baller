@@ -1,7 +1,8 @@
 .player-card-page {
-    padding: 20px;
+    padding: 130px; /* 設置整個頁面的間距 */
     background-color: #11131a;
     color: #f8f9fa;
+    box-sizing: border-box; /* 確保間距包含在元素的總寬度和高度中 */
 }
 
 .back-button {
@@ -16,39 +17,44 @@
 .player-card-container {
     display: flex;
     width: 100%;
+    box-sizing: border-box; /* 確保間距包含在寬度計算中 */
 }
 
 .player-card-left {
-    flex: 25%;
+    flex: 3; /* 30% 寬度 */
     padding: 10px;
+    box-sizing: border-box; /* 確保間距包含在寬度計算中 */
+    margin-right: 10px;
 }
 
 .player-card-right {
-    flex: 75%;
+    flex: 7; /* 70% 寬度 */
     padding: 10px;
+    box-sizing: border-box; /* 確保間距包含在寬度計算中 */
+    margin-left: 10px;
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.player-card-right-top {
-    flex: 50%;
+
+.player-card-right-top,
+.player-card-right-bottom {
+    flex: 1;
     display: flex;
     justify-content: center;
     border-radius: 10px;
+    box-sizing: border-box; /* 確保間距包含在寬度計算中 */
 }
 
 .player-card-right-bottom {
-    flex: 50%;
-    border-radius: 10px;
-    display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
 .player-card-right-bottom > .price-chart {
-    flex: 7; /* 70% width */
+    flex: 7; /* 70% 寬度 */
 }
 
 .player-card-right-bottom > .stat-chart {
-    flex: 3; /* 30% width */
+    flex: 3; /* 30% 寬度 */
 }

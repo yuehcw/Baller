@@ -21,6 +21,7 @@ const getNBAPlayers = async (req, res) => {
       firstName: player.firstName,
       lastName: player.lastName,
       team: player.currentTeam.name,
+      position: player.position,
       currentIndex:
         player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))
