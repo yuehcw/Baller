@@ -151,7 +151,9 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
             index: index,
           });
 
-          seasonData.games.sort((a, b) => a.gameId - b.gameId);
+          seasonData.games.sort(
+            (a, b) => new Date(a.gameDate) - new Date(b.gameDate),
+          );
 
           const totalIndices = seasonData.games.reduce(
             (acc, game) => acc + game.index,

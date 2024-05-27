@@ -20,6 +20,7 @@ const MyTeamPage = () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/nba/nba-Players`,
+          { headers: { noAuth: true } },
         );
         setPlayers(response.data);
       } catch (error) {
@@ -31,7 +32,7 @@ const MyTeamPage = () => {
   }, []);
 
   return (
-    <div className="myteampage-content">
+    <div className="myTeamPage-content">
       <div className="main-content">
         <div className="left-panel">
           <PlayerGridList title="Guards" players={players.slice(0, 3)} />

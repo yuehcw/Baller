@@ -8,6 +8,7 @@ const NodeCache = require("node-cache");
 const cors = require("cors");
 const { fetchNBANews } = require("./services/nbaService");
 const nbaRoutes = require("./routes/nbaRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -50,6 +51,7 @@ fetchNBANews(newsCache).then(() => {
 });
 
 app.use("/nba", nbaRoutes);
+app.use("/users", userRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

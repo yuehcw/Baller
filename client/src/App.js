@@ -7,28 +7,40 @@ import MyTeamPage from "./pages/MyTeamPage/MyTeamPage";
 import PlayerPage from "./pages/PlayerPage/PlayerPage";
 import "./App.css";
 import { SearchProvider } from "./context/SearchContext";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import PrivateRoute from "./PrivateRoute";
+import UserPage from "./components/UserPage";
+import { UserProvider } from "./context/UserContext";
 
 const App = () => {
   return (
-    <SearchProvider>
-      <Router>
-        <div className="app">
-          <div className="app-header">
-            <Header />
+    <UserProvider>
+      <SearchProvider>
+        <Router>
+          <div className="app">
+            <div className="app-header">
+              <Header />
+            </div>
+            <div className="app-content">
+              <Routes>
+                <Route path="/player/:id" element={<PlayerPage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/myteam" element={<MyTeamPage />} />
+                </Route>
+                <Route path="/login" element={<LoginPage />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/profile" element={<UserPage />} />
+                </Route>
+              </Routes>
+            </div>
+            <div className="app-footer">
+              <Footer />
+            </div>
           </div>
-          <div className="app-content">
-            <Routes>
-              <Route path="/player/:id" element={<PlayerPage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/myteam" element={<MyTeamPage />} />
-            </Routes>
-          </div>
-          <div className="app-footer">
-            <Footer />
-          </div>
-        </div>
-      </Router>
-    </SearchProvider>
+        </Router>
+      </SearchProvider>
+    </UserProvider>
   );
 };
 

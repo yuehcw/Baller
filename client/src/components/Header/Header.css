@@ -61,3 +61,55 @@
     height: 80px; /* Adjust based on your logo size */
 }
 
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+}
+
+.user-name {
+    color: white;
+}
+
+.user-gc {
+    font-size: 14px;
+    color: #60616D;
+}
+
+.user-avatar-list {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.user-avatar-button-first {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.user-avatar-button-first:hover {
+    color: #1890ff;
+}
+
+.user-avatar-button:hover {
+    color: #1890ff;
+}
+
+.user-avatar-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+}
+
+

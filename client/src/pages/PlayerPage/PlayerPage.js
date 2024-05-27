@@ -17,6 +17,7 @@ const PlayerCard = () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/nba/nba-Players/${id}`,
+          { headers: { noAuth: true } },
         );
         setPlayer(response.data);
       } catch (error) {

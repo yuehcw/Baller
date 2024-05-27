@@ -1,15 +1,22 @@
 import React from "react";
 import "./PlayerGridCard.css";
+import { useNavigate } from "react-router-dom";
 
-const PlayerGridCard = ({ player, onRemove }) => {
+const PlayerGridCard = ({ player }) => {
+  const navigate = useNavigate();
+  const handleNavigate = () => {
+    navigate(`/player/${player.id}`);
+  };
+
   return (
-    <div className="player-grid-card">
-      <img src={player.image} alt={`${player.firstName} ${player.lastName}`} />
+    <div className="player-grid-card" onClick={handleNavigate}>
+      <img
+        src={player.image.replace("260x190", "520x380")}
+        alt={`${player.firstName} ${player.lastName}`}
+      />
       <div className="player-grid-info">
-        <h3>
-          {player.firstName} {player.lastName}
-        </h3>
-        <p>{player.currentIndex}</p>
+        {`${player.firstName} ${player.lastName}`} <br />
+        <span className="player-grid-card-currentIndex">{`${player.currentIndex} GC`}</span>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const PlayerPerformanceChart = ({ player }) => {
         show: false,
       },
       axisLabel: {
-        margin: 40,
+        margin: 30,
         fontSize: 16,
         color: "#ffffff",
       },
@@ -43,7 +43,7 @@ const PlayerPerformanceChart = ({ player }) => {
         show: false,
       },
       axisLabel: {
-        margin: 60,
+        margin: 25,
         fontSize: 16,
         color: "#ffffff",
       },

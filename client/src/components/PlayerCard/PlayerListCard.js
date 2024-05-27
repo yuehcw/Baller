@@ -18,7 +18,7 @@ const PlayerListCard = ({ player, selected, onSelect }) => {
     >
       <div className="player-list-info">
         <img
-          src={player.image}
+          src={player.image.replace("260x190", "520x380")}
           alt={`${player.firstName} ${player.lastName}`}
           className="player-list-image"
         />

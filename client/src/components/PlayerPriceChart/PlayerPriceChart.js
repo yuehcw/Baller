@@ -69,7 +69,7 @@ const PlayerPriceChart = ({ player }) => {
     yAxis: {
       type: "value",
       axisLabel: {
-        margin: 30,
+        margin: 20,
         fontSize: 16,
         color: "#fff",
       },

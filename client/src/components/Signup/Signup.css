@@ -1,0 +1,135 @@
+.signup-page {
+    position: fixed;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.5s ease-in-out;
+    z-index: 1001;
+}
+
+.signup-page.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+}
+
+.signup-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    position: relative;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.signup-content h2 {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.signup-content p {
+    font-size: 15px;
+    color: #888;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 15px 0;
+}
+
+.signup-content form {
+    width: 100%;
+}
+
+.signup-content label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.signup-content .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.signup-content input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.signup-content .input-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-90%);
+    color: #888;
+    pointer-events: none;
+}
+
+.signup-page-submit-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.signup-content .terms {
+    font-size: 12px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-content .terms .terms-text {
+    color: #007bff;
+    text-decoration: none;
+    border-bottom: 1px solid #007bff;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}

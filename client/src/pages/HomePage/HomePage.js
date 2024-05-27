@@ -19,6 +19,7 @@ const HomePage = () => {
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/nba/nba-news`,
+          { headers: { noAuth: true } },
         );
         setNBANews(response.data);
       } catch (error) {
