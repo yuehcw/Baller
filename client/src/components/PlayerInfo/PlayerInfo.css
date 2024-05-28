@@ -52,7 +52,13 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 50%;
+}
 
+.player-add-isAdded {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50%;
 }
 
 .player-add-button {
@@ -84,5 +90,19 @@
     padding: 10px 20px; /* 调整内边距 */
 }
 
+.your-player-image {
+    width: 50%;
+    height: 50%;
+    opacity: 0;
+    transform: scale(0.5);
+    animation: appear 0.5s forwards;
+}
+
+@keyframes appear {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 
 

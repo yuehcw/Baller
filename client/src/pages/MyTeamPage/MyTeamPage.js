@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import PlayerGridList from "../../components/PlayerList/PlayerGridList";
 import PlayerList from "../../components/PlayerList/PlayerList";
 import SearchPlayers from "../../components/SearchPlayer/SearchPlayers";
+import { ToolbarContext } from "../../context/ToolbarContext";
+import MyTeamToolbar from "../../components/Toolbar/MyTeamToolbar";
 import "./MyTeamPage.css";
-import MyTeamToolbar from "../../components/MyTeamToolbar/MyTeamToolbar";
 
 const MyTeamPage = () => {
   const [players, setPlayers] = useState([]);
-  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const { selectedPlayer, setSelectedPlayer } = useContext(ToolbarContext);
+  const [selectedPlayerId, setSelectedPlayerId] = useState(null);
   const [priceRange, setPriceRange] = useState([
     Number.NEGATIVE_INFINITY,
     Number.POSITIVE_INFINITY,
@@ -49,14 +51,16 @@ const MyTeamPage = () => {
             players={players}
             selectedPlayer={selectedPlayer}
             setSelectedPlayer={setSelectedPlayer}
+            selectedPlayerId={selectedPlayerId}
+            setSelectedPlayerId={setSelectedPlayerId}
             priceRange={priceRange}
             positionFilter={positionFilter}
           />
         </div>
       </div>
       {selectedPlayer && (
-        <div className="myteampage-toolbar">
-          <MyTeamToolbar players={17} remainingBudget={97.5} />
+        <div>
+          <MyTeamToolbar playerGC={selectedPlayer.currentIndex} />
         </div>
       )}
     </div>

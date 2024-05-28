@@ -3,24 +3,29 @@ import { useNavigate } from "react-router-dom";
 import { Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../../context/UserContext";
+import { ToolbarContext } from "../../context/ToolbarContext";
 import "./Header.css";
 
 const Header = () => {
   const [activeItem, setActiveItem] = useState("home");
+  const { setSelectedPlayer } = useContext(ToolbarContext);
   const navigate = useNavigate();
   const { user, logoutUser } = useContext(UserContext);
 
   const handleItemClick = (key) => {
     setActiveItem(key);
+    setSelectedPlayer(null);
     navigate(`/${key}`);
   };
 
   const handleLogout = () => {
     logoutUser();
+    setSelectedPlayer(null);
     navigate("/login");
   };
 
   const handlepersonalinfo = () => {
+    setSelectedPlayer(null);
     navigate("/profile");
   };
 

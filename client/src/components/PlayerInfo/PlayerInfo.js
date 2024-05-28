@@ -1,8 +1,10 @@
-// PlayerInfo.js
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FlagContainer from "../FlagContainer/FlagContainer";
 import { Button, Badge } from "antd";
 import { HeartFilled } from "@ant-design/icons";
+import { ToolbarContext } from "../../context/ToolbarContext";
+import yourPlayer from "../../image/your-player.png";
+import axios from "axios";
 import "./PlayerInfo.css";
 
 const PlayerInfo = ({ player }) => {
@@ -106,9 +108,51 @@ const PlayerInfo = ({ player }) => {
       Cameroon: "4/4f/Flag_of_Cameroon.svg",
       // 可以根据需要继续添加更多国家的映射
     };
-
     return countryNameMap[countryName] || "unknown_flag.svg";
   };
+
+  const [isAdded, setIsAdded] = useState(false);
+  const { setSelectedPlayer } = useContext(ToolbarContext);
+
+  useEffect(() => {
+    if (player && player.available === false) {
+      setIsAdded(true);
+    }
+  }, [player]);
+
+  const handleAddToTeam = async () => {
+    setSelectedPlayer(player);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/users/addToMyTeam`,
+        { playerId: player._id },
+      );
+      if (response.status === 200) {
+        setIsAdded(true);
+        await handleSetUnavailable();
+      }
+    } catch (error) {
+      console.error("Error adding player to team: ", error);
+    }
+    if (!player) {
+      return <div>Loading...</div>;
+    }
+  };
+
+  const handleSetUnavailable = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/nba/nba-players/unavailable`,
+        { playerId: player._id },
+      );
+      if (response.status === 200) {
+        console.log("Player set to unavailable");
+      }
+    } catch (error) {
+      console.error("Error setting player to unavailable: ", error);
+    }
+  };
+
   return (
     <div className="player-info">
       <div className="player-info-image-container">
@@ -147,19 +191,37 @@ const PlayerInfo = ({ player }) => {
           {player.weight}
         </div>
       </div>
-      <div className="player-add">
-        <Button className="player-add-button" type="primary">
-          Add to my team
-        </Button>
-        <Button
-          className="player-add-tolist"
-          shape="square"
-          icon={
-            <HeartFilled
-              style={{ fontSize: "25px", color: "#1677FF", fill: "#1677FF" }}
+      <div className={`player-add ${isAdded ? "player-add-isAdded" : ""}`}>
+        {isAdded ? (
+          <img
+            src={yourPlayer}
+            alt="Your Player"
+            className="your-player-image"
+          />
+        ) : (
+          <>
+            <Button
+              type="primary"
+              onClick={handleAddToTeam}
+              className="player-add-button"
+            >
+              Add to my team
+            </Button>
+            <Button
+              className="player-add-tolist"
+              shape="square"
+              icon={
+                <HeartFilled
+                  style={{
+                    fontSize: "25px",
+                    color: "#1677FF",
+                    fill: "#1677FF",
+                  }}
+                />
+              }
             />
-          }
-        />
+          </>
+        )}
       </div>
     </div>
   );

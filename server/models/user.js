@@ -21,13 +21,15 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     avatar: { type: String },
-    team: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "NBAPlayer",
-    },
     GC: {
       type: Number,
     },
+    myTeam: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "NBAPlayer",
+      },
+    ],
   },
   { timestamps: true },
 );

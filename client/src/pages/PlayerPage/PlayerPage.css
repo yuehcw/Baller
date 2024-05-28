@@ -1,7 +1,10 @@
 .player-card-page {
+    display: flex;
     padding: 130px; /* 設置整個頁面的間距 */
     background-color: #11131a;
     color: #f8f9fa;
+    min-height: 100vh;
+    position: relative;
     box-sizing: border-box; /* 確保間距包含在元素的總寬度和高度中 */
 }
 
@@ -15,6 +18,7 @@
 }
 
 .player-card-container {
+    flex: 1;
     display: flex;
     width: 100%;
     box-sizing: border-box; /* 確保間距包含在寬度計算中 */

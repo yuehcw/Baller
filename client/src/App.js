@@ -11,34 +11,37 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import UserPage from "./components/UserPage";
 import { UserProvider } from "./context/UserContext";
+import { ToolbarProvider } from "./context/ToolbarContext";
 
 const App = () => {
   return (
     <UserProvider>
       <SearchProvider>
-        <Router>
-          <div className="app">
-            <div className="app-header">
-              <Header />
+        <ToolbarProvider>
+          <Router>
+            <div className="app">
+              <div className="app-header">
+                <Header />
+              </div>
+              <div className="app-content">
+                <Routes>
+                  <Route path="/player/:id" element={<PlayerPage />} />
+                  <Route path="/home" element={<HomePage />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/myteam" element={<MyTeamPage />} />
+                  </Route>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route element={<PrivateRoute />}>
+                    <Route path="/profile" element={<UserPage />} />
+                  </Route>
+                </Routes>
+              </div>
+              <div className="app-footer">
+                <Footer />
+              </div>
             </div>
-            <div className="app-content">
-              <Routes>
-                <Route path="/player/:id" element={<PlayerPage />} />
-                <Route path="/home" element={<HomePage />} />
-                <Route element={<PrivateRoute />}>
-                  <Route path="/myteam" element={<MyTeamPage />} />
-                </Route>
-                <Route path="/login" element={<LoginPage />} />
-                <Route element={<PrivateRoute />}>
-                  <Route path="/profile" element={<UserPage />} />
-                </Route>
-              </Routes>
-            </div>
-            <div className="app-footer">
-              <Footer />
-            </div>
-          </div>
-        </Router>
+          </Router>
+        </ToolbarProvider>
       </SearchProvider>
     </UserProvider>
   );

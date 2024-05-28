@@ -60,6 +60,10 @@ const playerSchema = new mongoose.Schema(
     currentTeam: teamSchema,
     seasons: [seasonStatSchema],
     headshotUrl: String,
+    available: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true },
 );

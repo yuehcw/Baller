@@ -24,6 +24,7 @@ const register = async (req, res) => {
       password: hashedPassword,
       emailAddress,
       GC: 20,
+      myTeam: [],
     });
     res.status(201).json({ message: "Account created successfully" });
   } catch (error) {
@@ -59,6 +60,7 @@ const login = async (req, res) => {
         fullName: user.fullName,
         emailAddress: user.emailAddress,
         avatar: user.avatar,
+        myTeam: user.myTeam,
         GC: user.GC,
       },
     });
@@ -80,8 +82,31 @@ const getUser = async (req, res) => {
   }
 };
 
+const addToTeam = async (req, res) => {
+  const { playerId } = req.body;
+
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (!user.myTeam.includes(playerId)) {
+      user.myTeam.push(playerId);
+      await user.save();
+      return res.status(200).json({ message: "Player added to team", user });
+    } else {
+      return res.status(400).json({ message: "Player already in team" });
+    }
+  } catch (error) {
+    console.error("Error adding player to team:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   register,
   login,
   getUser,
+  addToTeam,
 };

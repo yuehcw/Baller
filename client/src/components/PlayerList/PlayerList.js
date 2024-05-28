@@ -5,8 +5,9 @@ import "./PlayerList.css";
 
 const PlayerList = ({
   players,
-  selectedPlayer,
   setSelectedPlayer,
+  selectedPlayerId,
+  setSelectedPlayerId,
   title,
   priceRange,
   positionFilter,
@@ -33,8 +34,14 @@ const PlayerList = ({
     setFilteredPlayers(filtered);
   }, [players, priceRange, positionFilter]);
 
-  const handleSelect = (id) => {
-    setSelectedPlayer(id === selectedPlayer ? null : id);
+  const handleSelect = (id, player) => {
+    if (id === selectedPlayerId) {
+      setSelectedPlayerId(null);
+      setSelectedPlayer(null);
+    } else {
+      setSelectedPlayerId(id);
+      setSelectedPlayer(player);
+    }
   };
 
   const handlePageChange = (page) => {
@@ -61,8 +68,8 @@ const PlayerList = ({
             <PlayerListCard
               key={player.id}
               player={player}
-              selected={player.id === selectedPlayer}
-              onSelect={handleSelect}
+              selected={player.id === selectedPlayerId}
+              onSelect={() => handleSelect(player.id, player)}
             />
           ))}
         </div>

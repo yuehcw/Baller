@@ -112,6 +112,7 @@ const getNBAPlayerById = async (req, res) => {
     };
 
     const response = {
+      _id: player._id,
       id: player.playerId,
       image: player.headshotUrl,
       firstName: player.firstName,
@@ -124,6 +125,7 @@ const getNBAPlayerById = async (req, res) => {
       number: player.number,
       position: player.position,
       weight: player.weight,
+      available: player.available,
       currentIndex:
         player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))
@@ -148,8 +150,26 @@ const getNBANews = (req, res) => {
   }
 };
 
+const setPlayerUnavailable = async (req, res) => {
+  const { playerId } = req.body;
+  try {
+    const player = await NBAPlayer.findById(playerId);
+    if (!player) {
+      return res.status(404).json({ message: "Player not found" });
+    }
+
+    player.available = false;
+    await player.save();
+    res.status(200).json({ message: "Player set to unavailable", player });
+  } catch (error) {
+    console.error("Error setting player to unavailable:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getNBAPlayers,
   getNBAPlayerById,
   getNBANews,
+  setPlayerUnavailable,
 };

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./PlayerGridCard.css";
+import { ToolbarContext } from "../../context/ToolbarContext";
 import { useNavigate } from "react-router-dom";
 
 const PlayerGridCard = ({ player }) => {
   const navigate = useNavigate();
+  const { setSelectedPlayer } = useContext(ToolbarContext);
   const handleNavigate = () => {
+    setSelectedPlayer(null);
     navigate(`/player/${player.id}`);
   };
 

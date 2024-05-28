@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "antd";
 import { PlusOutlined, CheckOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { ToolbarContext } from "../../context/ToolbarContext";
 import "./PlayerListCard.css";
 
 const PlayerListCard = ({ player, selected, onSelect }) => {
   const navigate = useNavigate();
+  const { setSelectedPlayer } = useContext(ToolbarContext);
 
   const handleNavigate = () => {
+    setSelectedPlayer(null);
     navigate(`/player/${player.id}`);
   };
 

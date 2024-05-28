@@ -1,16 +1,20 @@
 // PlayerCard.js
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import PlayerInfo from "../../components/PlayerInfo/PlayerInfo";
 import PlayerPerformanceChart from "../../components/PlayerPerformanceChart/PlayerPerformanceChart";
 import PlayerPriceChart from "../../components/PlayerPriceChart/PlayerPriceChart";
-import "./PlayerPage.css";
 import PlayerStatChart from "../../components/PlayerStatChart/PlayerStatChart";
+import { ToolbarContext } from "../../context/ToolbarContext";
+import MyTeamToolbar from "../../components/Toolbar/MyTeamToolbar";
+import "./PlayerPage.css";
 
 const PlayerCard = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [player, setPlayer] = useState(null);
+  const { selectedPlayer, setSelectedPlayer } = useContext(ToolbarContext);
 
   useEffect(() => {
     const fetchPlayer = async () => {
@@ -34,7 +38,13 @@ const PlayerCard = () => {
 
   return (
     <div className="player-card-page">
-      <button onClick={() => window.history.back()} className="back-button">
+      <button
+        onClick={() => {
+          navigate("/myteam");
+          setSelectedPlayer(null);
+        }}
+        className="back-button"
+      >
         ← Back to my team
       </button>
       <div className="player-card-container">
@@ -51,6 +61,11 @@ const PlayerCard = () => {
           </div>
         </div>
       </div>
+      {selectedPlayer && (
+        <div>
+          <MyTeamToolbar playerGC={selectedPlayer.currentIndex} />
+        </div>
+      )}
     </div>
   );
 };
