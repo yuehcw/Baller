@@ -37,7 +37,7 @@ const PlayerListCard = ({ player, selected, onSelect }) => {
         icon={selected ? <CheckOutlined /> : <PlusOutlined />}
         onClick={(e) => {
           e.stopPropagation();
-          onSelect(player.id);
+          onSelect(player._id);
         }}
       />
     </div>

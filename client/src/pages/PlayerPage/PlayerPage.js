@@ -1,4 +1,3 @@
-// PlayerCard.js
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -32,6 +31,10 @@ const PlayerCard = () => {
     fetchPlayer();
   }, [id]);
 
+  const handlePlayerUnavailable = () => {
+    setPlayer({ ...player, available: false });
+  };
+
   if (!player) {
     return <div>Loading...</div>;
   }
@@ -63,7 +66,12 @@ const PlayerCard = () => {
       </div>
       {selectedPlayer && (
         <div>
-          <MyTeamToolbar playerGC={selectedPlayer.currentIndex} />
+          <MyTeamToolbar
+            playerGC={selectedPlayer.currentIndex}
+            playerId={selectedPlayer._id}
+            onPlayerUnavailable={handlePlayerUnavailable}
+            setSelectedPlayer={setSelectedPlayer}
+          />
         </div>
       )}
     </div>

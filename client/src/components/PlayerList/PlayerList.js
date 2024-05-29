@@ -66,10 +66,10 @@ const PlayerList = ({
         <div className="player-list-cards">
           {selectedPlayers.map((player) => (
             <PlayerListCard
-              key={player.id}
+              key={player._id}
               player={player}
-              selected={player.id === selectedPlayerId}
-              onSelect={() => handleSelect(player.id, player)}
+              selected={player._id === selectedPlayerId}
+              onSelect={() => handleSelect(player._id, player)}
             />
           ))}
         </div>

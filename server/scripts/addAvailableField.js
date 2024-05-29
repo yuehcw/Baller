@@ -16,8 +16,14 @@ const addAvailableField = async () => {
   }
 
   try {
+    // create definition for player doesn't have available definition
+    // const result = await NBAPlayer.updateMany(
+    //   { available: { $exists: false } },
+    //   { $set: { available: true } },
+    // );
+
     const result = await NBAPlayer.updateMany(
-      { available: { $exists: false } },
+      {},
       { $set: { available: true } },
     );
     console.log(`Updated ${result.nModified} documents`);

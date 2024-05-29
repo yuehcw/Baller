@@ -1,6 +1,9 @@
 .stat-chart {
-    height: 100%;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+    width: auto;
     background-color: #1a1b1e;
     padding: 20px;
     border-radius: 10px;
@@ -8,14 +11,19 @@
     color: #f8f9fa;
 }
 
-.stat-chart h2 {
-    margin-bottom: 35px;
+.stat-chart h3 {
+    flex: 0 0 35%;
+    display: flex;
+    align-items: flex-end;
+    margin: 0;
+    padding-bottom: 10px;
 }
 
 .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
+    flex: 1 0 65%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
 }
 
 .stat-row {
@@ -23,9 +31,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 5px 0;
-    margin-right: 40px;
-    margin-left: 40px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
+
 
 .stat-row:last-child {
     border-bottom: none;
@@ -51,7 +60,7 @@
 }
 
 .stat-row span {
-    margin-left: auto;
+    margin-left: 30px;
     font-weight: bold;
     font-size: 20px;
 }

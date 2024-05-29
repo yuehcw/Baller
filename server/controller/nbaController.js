@@ -16,12 +16,14 @@ const getNBAPlayers = async (req, res) => {
     });
 
     const response = filteredPlayers.map((player) => ({
+      _id: player._id,
       id: player.playerId,
       image: player.headshotUrl,
       firstName: player.firstName,
       lastName: player.lastName,
       team: player.currentTeam.name,
       position: player.position,
+      available: player.available,
       currentIndex:
         player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))

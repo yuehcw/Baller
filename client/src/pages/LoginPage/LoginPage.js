@@ -44,7 +44,7 @@ const LoginPage = () => {
       const { token, user } = response.data;
       localStorage.setItem("token", token);
       loginUser(user);
-      navigate("/profile");
+      navigate("/myteam");
     } catch (error) {
       console.error("Error logging in", error);
       setError(error.response.data.message);

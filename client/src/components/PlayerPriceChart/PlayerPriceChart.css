@@ -1,6 +1,6 @@
 .price-chart {
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: auto;
     background-color: #1a1b1e;
     padding: 20px;
     border-radius: 10px;
@@ -8,13 +8,10 @@
     color: #f8f9fa;
 }
 
-.price-chart h3 {
-    margin-bottom: 20px;
-}
-
 .chart {
     height: 400px;
     width: 100%;
     background-color: #1a1b1e;
+    padding-top: 50px;
     border-radius: 10px;
 }

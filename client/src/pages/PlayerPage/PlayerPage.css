@@ -1,6 +1,7 @@
 .player-card-page {
     display: flex;
-    padding: 130px; /* 設置整個頁面的間距 */
+    flex-direction: column;
+    padding: 60px; /* 設置整個頁面的間距 */
     background-color: #11131a;
     color: #f8f9fa;
     min-height: 100vh;
@@ -15,6 +16,8 @@
     font-size: 16px;
     cursor: pointer;
     margin-bottom: 20px;
+    box-sizing: border-box;
+    align-self: flex-start;
 }
 
 .player-card-container {
@@ -45,20 +48,20 @@
 .player-card-right-bottom {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     border-radius: 10px;
     box-sizing: border-box; /* 確保間距包含在寬度計算中 */
 }
 
 .player-card-right-bottom {
-    justify-content: space-between;
+    display: flex;
     gap: 20px;
 }
 
 .player-card-right-bottom > .price-chart {
-    flex: 7; /* 70% 寬度 */
+    flex: 8;
 }
 
 .player-card-right-bottom > .stat-chart {
-    flex: 3; /* 30% 寬度 */
+    flex: 2;
 }

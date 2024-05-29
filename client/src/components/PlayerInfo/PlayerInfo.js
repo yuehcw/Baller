@@ -4,7 +4,6 @@ import { Button, Badge } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 import { ToolbarContext } from "../../context/ToolbarContext";
 import yourPlayer from "../../image/your-player.png";
-import axios from "axios";
 import "./PlayerInfo.css";
 
 const PlayerInfo = ({ player }) => {
@@ -110,47 +109,15 @@ const PlayerInfo = ({ player }) => {
     };
     return countryNameMap[countryName] || "unknown_flag.svg";
   };
-
   const [isAdded, setIsAdded] = useState(false);
   const { setSelectedPlayer } = useContext(ToolbarContext);
 
   useEffect(() => {
-    if (player && player.available === false) {
-      setIsAdded(true);
-    }
-  }, [player]);
+    setIsAdded(player.available === false);
+  }, [player.available]);
 
-  const handleAddToTeam = async () => {
+  const handleAddToTeamButton = async () => {
     setSelectedPlayer(player);
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/addToMyTeam`,
-        { playerId: player._id },
-      );
-      if (response.status === 200) {
-        setIsAdded(true);
-        await handleSetUnavailable();
-      }
-    } catch (error) {
-      console.error("Error adding player to team: ", error);
-    }
-    if (!player) {
-      return <div>Loading...</div>;
-    }
-  };
-
-  const handleSetUnavailable = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/nba/nba-players/unavailable`,
-        { playerId: player._id },
-      );
-      if (response.status === 200) {
-        console.log("Player set to unavailable");
-      }
-    } catch (error) {
-      console.error("Error setting player to unavailable: ", error);
-    }
   };
 
   return (
@@ -202,7 +169,7 @@ const PlayerInfo = ({ player }) => {
           <>
             <Button
               type="primary"
-              onClick={handleAddToTeam}
+              onClick={handleAddToTeamButton}
               className="player-add-button"
             >
               Add to my team

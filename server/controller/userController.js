@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
+const NBAPlayer = require("../models/nbaPlayer");
 const register = async (req, res) => {
   const { fullName, emailAddress, password } = req.body;
 
@@ -36,33 +36,33 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { emailAddress, password } = req.body;
 
-  console.log("Login request:", { emailAddress, password });
-
   try {
     const user = await User.findOne({ emailAddress });
     if (!user) {
+      console.log("User not found");
       return res.status(400).json({ message: "invalid_input" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log("Invalid password");
       return res.status(400).json({ message: "invalid_password_input" });
     }
+
+    const players = await NBAPlayer.find({ _id: { $in: user.myTeam } });
+    const userData = {
+      ...user._doc,
+      myTeam: players,
+    };
 
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", {
       expiresIn: "1h",
     });
+    console.log("Login successful");
     res.status(200).json({
       message: "Login successful",
       token,
-      user: {
-        userId: user.userId,
-        fullName: user.fullName,
-        emailAddress: user.emailAddress,
-        avatar: user.avatar,
-        myTeam: user.myTeam,
-        GC: user.GC,
-      },
+      user: userData,
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -76,14 +76,19 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json(user);
+    const players = await NBAPlayer.find({ _id: { $in: user.myTeam } });
+    const userData = {
+      ...user._doc,
+      myTeam: players,
+    };
+    res.status(200).json(userData);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
 };
 
 const addToTeam = async (req, res) => {
-  const { playerId } = req.body;
+  const { playerId, playerGC } = req.body;
 
   try {
     const user = await User.findById(req.user.userId).select("-password");
@@ -91,8 +96,13 @@ const addToTeam = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    if (user.GC - playerGC < 0) {
+      return res.status(400).json({ message: "Insufficient GC to add player" });
+    }
+
     if (!user.myTeam.includes(playerId)) {
       user.myTeam.push(playerId);
+      user.GC -= playerGC;
       await user.save();
       return res.status(200).json({ message: "Player added to team", user });
     } else {

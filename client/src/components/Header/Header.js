@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -10,7 +10,11 @@ const Header = () => {
   const [activeItem, setActiveItem] = useState("home");
   const { setSelectedPlayer } = useContext(ToolbarContext);
   const navigate = useNavigate();
-  const { user, logoutUser } = useContext(UserContext);
+  const { user, logoutUser, refreshUserData } = useContext(UserContext);
+
+  useEffect(() => {
+    refreshUserData(); // 確保 Header 獲取最新的用戶數據
+  }, []);
 
   const handleItemClick = (key) => {
     setActiveItem(key);
@@ -81,7 +85,7 @@ const Header = () => {
             </Popover>
             <div className="user-details">
               <span className="user-name">{user.fullName}</span>
-              <span className="user-gc">$ {user.GC} GC</span>
+              <span className="user-gc">$ {user.GC.toFixed(1)} GC</span>
             </div>
           </div>
         ) : (
