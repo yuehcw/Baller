@@ -3,6 +3,7 @@ import FlagContainer from "../FlagContainer/FlagContainer";
 import { Button, Badge } from "antd";
 import { HeartFilled } from "@ant-design/icons";
 import { ToolbarContext } from "../../context/ToolbarContext";
+import { UserContext } from "../../context/UserContext";
 import yourPlayer from "../../image/your-player.png";
 import "./PlayerInfo.css";
 
@@ -109,62 +110,57 @@ const PlayerInfo = ({ player }) => {
     };
     return countryNameMap[countryName] || "unknown_flag.svg";
   };
+  const { user, refreshUserData } = useContext(UserContext);
   const [isAdded, setIsAdded] = useState(false);
   const { setSelectedPlayer } = useContext(ToolbarContext);
 
   useEffect(() => {
-    setIsAdded(player.available === false);
-  }, [player.available]);
+    if (user && user.myTeam && player) {
+      const isPlayerInTeam = user.myTeam.some(
+        (teamPlayer) => teamPlayer.playerId === player.id,
+      );
+      console.log("Player ID:", player.id);
+      console.log("Is player in team:", isPlayerInTeam);
+      setIsAdded(isPlayerInTeam);
+    }
+  }, [user, player]);
 
   const handleAddToTeamButton = async () => {
     setSelectedPlayer(player);
+    await refreshUserData();
   };
 
   return (
     <div className="player-info">
       <div className="player-info-image-container">
         <Badge.Ribbon text={`#${player.number}`} color="#2A2B2E">
-          <img
-            src={player.image.replace("260x190", "520x380")}
-            alt={`${player.firstName} ${player.lastName}`}
-            className="player-image"
-          />
+          <div className="player-image-wrapper">
+            <img
+              src={player.image.replace("260x190", "520x380")}
+              alt={`${player.firstName} ${player.lastName}`}
+              className="player-image"
+            />
+            {isAdded && (
+              <img
+                src={yourPlayer}
+                alt="Your Player"
+                className="your-player-overlay"
+              />
+            )}
+          </div>
         </Badge.Ribbon>
-      </div>
-      <div className="player-info-name-container">
-        <h2>
-          {player.firstName} {player.lastName}
-        </h2>
-        <h2>{player.currentIndex} GC</h2>
-      </div>
-      <div className="player-info-team-container">
-        <FlagContainer
-          flagSrc={countryToFlagUrl(player.country)}
-          text={player.country}
-        />
-        <FlagContainer flagSrc={player.teamLogo} text={player.team} />
-      </div>
-      <div className="player-details">
-        <div className="player-details-row">
-          <p>Position: </p>
-          {player.position}
-        </div>
-        <div className="player-details-row">
-          <p>Height: </p>
-          {player.height}
-        </div>
-        <div className="player-details-row">
-          <p>Weight: </p>
-          {player.weight}
-        </div>
       </div>
       <div className={`player-add ${isAdded ? "player-add-isAdded" : ""}`}>
         {isAdded ? (
-          <img
-            src={yourPlayer}
-            alt="Your Player"
-            className="your-player-image"
-          />
+          <>
+            <Button
+              type="primary"
+              onClick={handleAddToTeamButton}
+              className="player-add-button"
+            >
+              $ {player.currentIndex} GC/share
+            </Button>
+          </>
         ) : (
           <>
             <Button
@@ -172,7 +168,7 @@ const PlayerInfo = ({ player }) => {
               onClick={handleAddToTeamButton}
               className="player-add-button"
             >
-              Add to my team
+              $ {player.currentIndex} GC/share
             </Button>
             <Button
               className="player-add-tolist"
@@ -190,8 +186,38 @@ const PlayerInfo = ({ player }) => {
           </>
         )}
       </div>
+      <div className="player-info-name-container">
+        <h2>
+          {player.firstName} {player.lastName}
+        </h2>
+        <h2>{player.currentIndex} GC</h2>
+      </div>
+      <div className="player-info-team-container">
+        <FlagContainer
+          flagSrc={countryToFlagUrl(player.country)}
+          text={player.country}
+        />
+        <FlagContainer flagSrc={player.teamLogo} text={player.team} />
+      </div>
+      <div className="player-info-share-container">
+        <h3>Available Shares</h3>
+        <h3>{player.shares}</h3>
+      </div>
+      <div className="player-details">
+        <div className="player-details-row">
+          <p>Position: </p>
+          {player.position}
+        </div>
+        <div className="player-details-row">
+          <p>Height: </p>
+          {player.height}
+        </div>
+        <div className="player-details-row">
+          <p>Weight: </p>
+          {player.weight}
+        </div>
+      </div>
     </div>
   );
 };
-
 export default PlayerInfo;

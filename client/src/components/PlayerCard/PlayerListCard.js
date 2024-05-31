@@ -5,13 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { ToolbarContext } from "../../context/ToolbarContext";
 import "./PlayerListCard.css";
 
-const PlayerListCard = ({ player, selected, onSelect }) => {
+const PlayerListCard = ({ player, selected, onSelect, toolbarOpen }) => {
   const navigate = useNavigate();
   const { setSelectedPlayer } = useContext(ToolbarContext);
 
   const handleNavigate = () => {
     setSelectedPlayer(null);
     navigate(`/player/${player.id}`);
+  };
+
+  const handleSelect = (e) => {
+    e.stopPropagation();
+    if (!toolbarOpen) {
+      onSelect(player._id);
+    }
   };
 
   return (
@@ -29,16 +36,13 @@ const PlayerListCard = ({ player, selected, onSelect }) => {
           <div className="player-list-name">{`${player.firstName} ${player.lastName}`}</div>
         </div>
       </div>
-      <div className="player-list-team">{player.team}</div>
+      <div className="player-list-shares">{player.shares}</div>
       <div className="player-list-price">{player.currentIndex}</div>
       <Button
         type="primary"
         shape="circle"
         icon={selected ? <CheckOutlined /> : <PlusOutlined />}
-        onClick={(e) => {
-          e.stopPropagation();
-          onSelect(player._id);
-        }}
+        onClick={handleSelect}
       />
     </div>
   );

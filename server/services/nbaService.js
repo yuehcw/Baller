@@ -89,6 +89,7 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
             teamLogo: gameStats.team.logo,
           },
           seasons: [],
+          shares: 100000,
         });
       } else {
         player.currentTeam = {
@@ -148,7 +149,7 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
             plusMinus: gameStats.plusMinus,
             fga: gameStats.fga,
             fgp: gameStats.fgp,
-            index: index,
+            index: parseFloat(index.toFixed(1)),
           });
 
           seasonData.games.sort(
@@ -159,7 +160,9 @@ const fetchNBAPLayerSTATSData = async (team, season) => {
             (acc, game) => acc + game.index,
             0,
           );
-          player.currentIndex = totalIndices / seasonData.games.length;
+          player.currentIndex = parseFloat(
+            (totalIndices / seasonData.games.length).toFixed(1),
+          );
 
           await player.save();
           console.log(

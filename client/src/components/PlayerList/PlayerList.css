@@ -1,4 +1,6 @@
 .player-list-all {
+    width: 100%;
+    margin: 0 auto;
 }
 
 .player-list {
@@ -27,20 +29,23 @@
     color: #f8f9fa;
 }
 
-.player-list-title-team {
+.player-list-title-shares {
     display: flex;
     align-items: center;
-    width: 222px; /* 設置固定寬度 */
-    justify-content: flex-start;
-    color: #f8f9fa;
+    color: white;
+    font-size: 16px;
+    width: 20%;
+    margin-left: 10%;
+    justify-content: center;
 }
 
 .player-list-title-price {
     display: flex;
     align-items: center;
-    width: 80px; /* 設置固定寬度 */
-    justify-content: flex-start;
-    color: #f8f9fa;
+    color: white;
+    font-size: 16px;
+    width: 20%;
+    justify-content: center;
 }
 
 /* PlayerList.css */

@@ -23,11 +23,18 @@ const UserSchema = new mongoose.Schema(
     avatar: { type: String },
     GC: {
       type: Number,
+      set: (v) => parseFloat(v.toFixed(1)),
     },
     myTeam: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "NBAPlayer",
+        player: {
+          type: Number,
+          ref: "NBAPlayer",
+        },
+        shares: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },

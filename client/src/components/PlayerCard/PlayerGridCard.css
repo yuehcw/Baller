@@ -2,10 +2,11 @@
     background: #1a1a2e;
     border-radius: 10px;
     text-align: center;
-    width: 205px;
-    height: 180px;
+    width: 130px;
+    height: 100px;
     position: relative;
     cursor: pointer;
+    margin-bottom: 80px;
 }
 
 .player-grid-card img {

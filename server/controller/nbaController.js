@@ -23,7 +23,7 @@ const getNBAPlayers = async (req, res) => {
       lastName: player.lastName,
       team: player.currentTeam.name,
       position: player.position,
-      available: player.available,
+      shares: player.shares,
       currentIndex:
         player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))
@@ -127,7 +127,7 @@ const getNBAPlayerById = async (req, res) => {
       number: player.number,
       position: player.position,
       weight: player.weight,
-      available: player.available,
+      shares: player.shares,
       currentIndex:
         player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))
@@ -152,20 +152,30 @@ const getNBANews = (req, res) => {
   }
 };
 
-const setPlayerUnavailable = async (req, res) => {
-  const { playerId } = req.body;
+const updatePlayerShares = async (req, res) => {
+  const { playerId, newShares } = req.body;
+
   try {
-    const player = await NBAPlayer.findById(playerId);
+    const player = await NBAPlayer.findOne({ _id: playerId });
+
     if (!player) {
       return res.status(404).json({ message: "Player not found" });
     }
 
-    player.available = false;
+    // Check if newShares will result in negative shares
+    if (player.shares + newShares < 0) {
+      return res.status(400).json({ message: "Insufficient shares" });
+    }
+
+    // Update the shares based on the value of newShares
+    player.shares += newShares;
+
     await player.save();
-    res.status(200).json({ message: "Player set to unavailable", player });
+
+    return res.status(200).json({ message: "Player shares updated", player });
   } catch (error) {
-    console.error("Error setting player to unavailable:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error updating player shares:", error);
+    return res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -173,5 +183,5 @@ module.exports = {
   getNBAPlayers,
   getNBAPlayerById,
   getNBANews,
-  setPlayerUnavailable,
+  updatePlayerShares,
 };

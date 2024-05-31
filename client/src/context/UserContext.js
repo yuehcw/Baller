@@ -24,7 +24,6 @@ export const UserProvider = ({ children }) => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/users/profile`,
       );
-      console.log("Fetched user data:", response.data);
       setUser(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {

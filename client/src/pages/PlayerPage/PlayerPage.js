@@ -5,8 +5,9 @@ import PlayerInfo from "../../components/PlayerInfo/PlayerInfo";
 import PlayerPerformanceChart from "../../components/PlayerPerformanceChart/PlayerPerformanceChart";
 import PlayerPriceChart from "../../components/PlayerPriceChart/PlayerPriceChart";
 import PlayerStatChart from "../../components/PlayerStatChart/PlayerStatChart";
-import { ToolbarContext } from "../../context/ToolbarContext";
 import MyTeamToolbar from "../../components/Toolbar/MyTeamToolbar";
+import { ToolbarContext } from "../../context/ToolbarContext";
+import { UserContext } from "../../context/UserContext";
 import "./PlayerPage.css";
 
 const PlayerCard = () => {
@@ -14,25 +15,27 @@ const PlayerCard = () => {
   const navigate = useNavigate();
   const [player, setPlayer] = useState(null);
   const { selectedPlayer, setSelectedPlayer } = useContext(ToolbarContext);
+  const { refreshUserData } = useContext(UserContext);
+
+  const fetchPlayer = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/nba/nba-Players/${id}`,
+        { headers: { noAuth: true } },
+      );
+      setPlayer(response.data);
+    } catch (error) {
+      console.error("Error fetching player data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchPlayer = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/nba/nba-Players/${id}`,
-          { headers: { noAuth: true } },
-        );
-        setPlayer(response.data);
-      } catch (error) {
-        console.error("Error fetching player data:", error);
-      }
-    };
-
     fetchPlayer();
   }, [id]);
 
-  const handlePlayerUnavailable = () => {
-    setPlayer({ ...player, available: false });
+  const handleTransactionComplete = async () => {
+    await refreshUserData();
+    await fetchPlayer();
   };
 
   if (!player) {
@@ -68,9 +71,12 @@ const PlayerCard = () => {
         <div>
           <MyTeamToolbar
             playerGC={selectedPlayer.currentIndex}
-            playerId={selectedPlayer._id}
-            onPlayerUnavailable={handlePlayerUnavailable}
+            player_Id={selectedPlayer._id}
+            playerId={selectedPlayer.id}
+            playerShares={selectedPlayer.shares}
             setSelectedPlayer={setSelectedPlayer}
+            onTransactionComplete={handleTransactionComplete}
+            onClose={() => {}}
           />
         </div>
       )}

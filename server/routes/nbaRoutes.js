@@ -4,13 +4,13 @@ const {
   getNBAPlayers,
   getNBAPlayerById,
   getNBANews,
-  setPlayerUnavailable,
+  updatePlayerShares,
 } = require("../controller/nbaController");
 const authMiddleware = require("../middleWare/authMiddleware");
 
 router.get("/nba-news", getNBANews);
 router.get("/nba-Players", getNBAPlayers);
 router.get("/nba-Players/:id", getNBAPlayerById);
-router.put("/nba-players/unavailable", authMiddleware, setPlayerUnavailable);
+router.put("/nba-players/updateShares", authMiddleware, updatePlayerShares);
 
 module.exports = router;

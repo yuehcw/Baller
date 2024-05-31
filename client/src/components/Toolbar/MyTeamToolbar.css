@@ -9,6 +9,17 @@
     }
 }
 
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
 .toolbar {
     position: fixed;
     bottom: 0;
@@ -18,8 +29,12 @@
     padding: 20px;
     background-color: #1A1B1E;
     border-top: 3px solid #2f2f2f;
-    z-index: 1000; /* 确保工具栏在最上层 */
+    z-index: 1000;
     animation: slideInUp 0.5s ease-in-out;
+}
+
+.toolbar.slide-out {
+    animation: slideOutDown 0.5s ease-in-out forwards;
 }
 
 .toolbar-row {
@@ -63,10 +78,22 @@
     justify-content: center;
 }
 
-
 .continue-button {
     width: 130px;
     height: 100%;
     font-size: 16px;
     margin-right: 70px;
+}
+
+.share-input {
+    width: 100px;
+}
+
+.toolbar-close {
+    position: absolute;
+    top: -20px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
 }

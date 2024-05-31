@@ -1,72 +1,58 @@
-h3 {
-    text-align: center;
-    color: #1D88F4;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-a {
-    color: white;
-}
-
+/* HomePage specific styles */
 .homepage-image-section {
     position: relative;
     width: 100%;
+    height: 100vh; /* Full viewport height */
+    background-color: #11131A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homepage-image {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .homepage-image-text-overlay {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    height:auto;
-    width: auto;
-    top: 30%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(to bottom, rgba(0, 21, 41, 0.95), rgba(0, 32, 64, 0.95));
-    box-shadow: 0 0 60px 20px rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
     color: white;
-    padding: 20px;
     text-align: center;
-    z-index: 1;
 }
 
-.homepage-image-text-overlay-body {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
+.homepage-image-text-overlay h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.homepage-image-text-overlay p {
     font-size: 1rem;
+    margin: 20px 0;
 }
-
-.homepage-content {
-    background-color: #11131A;;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 
 .homepage-start-button {
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 1rem;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    background-color: white;
+    color: #11131A;
     border: none;
     border-radius: 5px;
+    width: 40%;
+    height: 70px;
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.7), 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+.homepage-start-button:hover {
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.9), 0 0 25px rgba(0, 123, 255, 0.7);
+}
+
+.homepage-nba-news {
+    padding: 20px;
 }

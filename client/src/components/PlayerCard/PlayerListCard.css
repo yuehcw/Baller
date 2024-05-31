@@ -18,6 +18,7 @@
     display: flex;
     align-items: center;
     flex-grow: 1;
+    width: 33%;
 }
 
 .player-list-image {
@@ -28,9 +29,6 @@
 }
 
 .player-list-details {
-    display: flex;
-    flex-direction: column; /* 確保姓名和數據垂直排列 */
-    justify-content: center; /* 垂直居中 */
     color: white;
 }
 
@@ -39,18 +37,15 @@
     font-weight: bold;
 }
 
-.player-list-stats {
-    font-size: 14px;
-    color: #888;
-}
 
-.player-list-team {
+.player-list-shares {
     display: flex;
     align-items: center;
     color: white;
     font-size: 16px;
-    width: 220px; /* 設置固定寬度 */
-    justify-content: flex-start;
+    width: 20%;
+    margin-left: 10%;
+    justify-content: center;
 }
 
 .player-list-price {
@@ -58,13 +53,13 @@
     align-items: center;
     color: white;
     font-size: 16px;
-    width: 90px; /* 設置固定寬度 */
-    justify-content: flex-start;
+    width: 20%;
+    justify-content: center;
 }
 
 .player-list-button {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* 保持按鈕大小 */
+    flex-shrink: 0; /* Keep button size constant */
     margin-left: 10px;
 }

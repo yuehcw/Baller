@@ -5,16 +5,16 @@ import "./PlayerList.css";
 
 const PlayerList = ({
   players,
-  setSelectedPlayer,
   selectedPlayerId,
-  setSelectedPlayerId,
   title,
   priceRange,
   positionFilter,
+  toolbarOpen,
+  handleSelectPlayer,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredPlayers, setFilteredPlayers] = useState([]);
-  const playersPerPage = 10;
+  const playersPerPage = 12;
 
   useEffect(() => {
     const filtered = players.filter((player) => {
@@ -35,13 +35,7 @@ const PlayerList = ({
   }, [players, priceRange, positionFilter]);
 
   const handleSelect = (id, player) => {
-    if (id === selectedPlayerId) {
-      setSelectedPlayerId(null);
-      setSelectedPlayer(null);
-    } else {
-      setSelectedPlayerId(id);
-      setSelectedPlayer(player);
-    }
+    handleSelectPlayer(id, player);
   };
 
   const handlePageChange = (page) => {
@@ -58,7 +52,7 @@ const PlayerList = ({
     <div className="player-list-all">
       <div className="player-list-title">
         <h5 className="player-list-title-player">Player</h5>
-        <h5 className="player-list-title-team">Team</h5>
+        <h5 className="player-list-title-shares">Available Stock</h5>
         <h5 className="player-list-title-price">GC</h5>
       </div>
       <div className="player-list">
@@ -70,6 +64,7 @@ const PlayerList = ({
               player={player}
               selected={player._id === selectedPlayerId}
               onSelect={() => handleSelect(player._id, player)}
+              toolbarOpen={toolbarOpen}
             />
           ))}
         </div>

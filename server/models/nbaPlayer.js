@@ -22,7 +22,10 @@ const gameSchema = new mongoose.Schema(
     plusMinus: String,
     fga: Number,
     fgp: String,
-    index: Number,
+    index: {
+      type: Number,
+      set: (v) => parseFloat(v.toFixed(1)),
+    },
   },
   { _id: false },
 );
@@ -56,13 +59,17 @@ const playerSchema = new mongoose.Schema(
     weight: String,
     lastAttended: String,
     country: String,
-    currentIndex: Number,
+    currentIndex: {
+      type: Number,
+      set: (v) => parseFloat(v.toFixed(1)),
+    },
+
     currentTeam: teamSchema,
     seasons: [seasonStatSchema],
     headshotUrl: String,
-    available: {
-      type: Boolean,
-      default: true,
+    shares: {
+      type: Number,
+      required: true,
     },
   },
   { timestamps: true },

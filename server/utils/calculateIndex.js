@@ -35,7 +35,7 @@ function calculatePlayerIndex(stats) {
   // Plus/Minus can be both positive and negative, directly added
   score += safeNum(stats.plusMinus);
 
-  return score;
+  return parseFloat(score.toFixed(1));
 }
 
 module.exports = { calculatePlayerIndex };

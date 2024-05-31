@@ -22,10 +22,21 @@ const addAvailableField = async () => {
     //   { $set: { available: true } },
     // );
 
+    // const result = await NBAPlayer.updateMany(
+    //     { shares: { $exists: false } },
+    //     { $set: { shares: 100000 } }
+    // );
+
+    // const result = await NBAPlayer.updateMany(
+    //   { shares: { $exists: false } },
+    //   { $set: { shares: 100000 } },
+    // );
+
     const result = await NBAPlayer.updateMany(
-      {},
-      { $set: { available: true } },
+      { available: { $exists: true } },
+      { $unset: { available: "" } },
     );
+
     console.log(`Updated ${result.nModified} documents`);
   } catch (error) {
     console.error("Error updating documents:", error);
