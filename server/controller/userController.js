@@ -49,10 +49,27 @@ const login = async (req, res) => {
       return res.status(400).json({ message: "invalid_password_input" });
     }
 
-    const players = await NBAPlayer.find({ _id: { $in: user.myTeam } });
+    // Extract player IDs from user's myTeam array
+    const playerIds = user.myTeam.map((teamPlayer) => teamPlayer.player);
+
+    // Fetch players based on playerId (number)
+    const players = await NBAPlayer.find({ playerId: { $in: playerIds } });
+
+    // Merge shares from user's myTeam into the player objects
+    const myTeam = players.map((player) => {
+      const teamPlayer = user.myTeam.find(
+        (tp) => tp.player === player.playerId,
+      );
+      return {
+        ...player._doc,
+        shares: teamPlayer.shares,
+        price: teamPlayer.price,
+      };
+    });
+
     const userData = {
       ...user._doc,
-      myTeam: players,
+      myTeam,
     };
 
     const token = jwt.sign({ userId: user._id }, "your_jwt_secret", {
@@ -91,6 +108,7 @@ const getUser = async (req, res) => {
       return {
         ...player._doc,
         shares: teamPlayer.shares,
+        price: teamPlayer.price,
       };
     });
 
@@ -105,9 +123,8 @@ const getUser = async (req, res) => {
   }
 };
 
-const MAX_TEAM_SIZE = 60;
 const addToTeam = async (req, res) => {
-  const { playerId, playerGC, playerShares } = req.body;
+  const { playerId, playerPrice, playerGC, playerShares } = req.body;
 
   try {
     const user = await User.findById(req.user.userId).select("-password");
@@ -115,7 +132,7 @@ const addToTeam = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const MAX_TEAM_SIZE = 60; // Assuming MAX_TEAM_SIZE is defined somewhere
+    const MAX_TEAM_SIZE = 50; // Assuming MAX_TEAM_SIZE is defined somewhere
 
     if (user.myTeam.length >= MAX_TEAM_SIZE) {
       return res
@@ -123,11 +140,12 @@ const addToTeam = async (req, res) => {
         .json({ message: `Team size cannot exceed ${MAX_TEAM_SIZE} players` });
     }
 
-    if (user.GC < playerGC) {
+    if (user.GC < playerPrice) {
       return res.status(400).json({ message: "Insufficient GC to add player" });
     }
 
     const parsedPlayerShares = parseInt(playerShares, 10); // Convert to number
+    const parsedPlayerPrice = parseFloat(playerPrice); // Convert to number
     const parsedPlayerGC = parseFloat(playerGC); // Convert to number
 
     const existingPlayerIndex = user.myTeam.findIndex(
@@ -137,15 +155,17 @@ const addToTeam = async (req, res) => {
     if (existingPlayerIndex >= 0) {
       // Player already exists, update shares
       user.myTeam[existingPlayerIndex].shares += parsedPlayerShares;
+      user.myTeam[existingPlayerIndex].price = parsedPlayerGC;
     } else {
       // Player does not exist, add to team
       user.myTeam.push({
         player: parseInt(playerId, 10),
         shares: parsedPlayerShares,
+        price: parsedPlayerGC,
       });
     }
 
-    user.GC -= parsedPlayerGC;
+    user.GC -= parsedPlayerPrice;
 
     await user.save();
     return res

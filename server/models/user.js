@@ -35,6 +35,11 @@ const UserSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        price: {
+          type: Number,
+          required: true,
+          set: (v) => parseFloat(v.toFixed(1)),
+        },
       },
     ],
   },

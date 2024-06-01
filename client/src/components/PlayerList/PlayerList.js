@@ -52,7 +52,7 @@ const PlayerList = ({
     <div className="player-list-all">
       <div className="player-list-title">
         <h5 className="player-list-title-player">Player</h5>
-        <h5 className="player-list-title-shares">Available Stock</h5>
+        <h5 className="player-list-title-shares">AVBL Stock</h5>
         <h5 className="player-list-title-price">GC</h5>
       </div>
       <div className="player-list">

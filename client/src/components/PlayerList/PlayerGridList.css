@@ -12,3 +12,72 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+
+.player-grid-radio-group-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.player-grid-radio-group.ant-radio-group {
+    background-color: #1a1a2e;
+    border-radius: 20px;
+    padding: 5px;
+    max-width: 200px;
+    width: auto;
+    display: flex;
+    align-items: center;
+}
+
+
+.player-grid-radio-group .ant-radio-button-wrapper {
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+    color: #f8f9fa !important;
+    border-radius: 20px !important; /* Ensure border-radius is applied to each button */
+    transition: background-color 0.3s, color 0.3s, border-radius 0.3s;
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper:first-child {
+    border-radius: 20px 0 0 20px !important;
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper:last-child {
+    border-radius: 0 20px 20px 0 !important;
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper-checked {
+    background-color: #1677ff !important;
+    color: #f8f9fa !important;
+    border-radius: 20px !important;
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper:hover {
+    color: white !important;
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper:focus-within,
+.player-grid-radio-group .ant-radio-button-wrapper:active,
+.player-grid-radio-group .ant-radio-button-wrapper:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border-radius: 20px !important; /* Ensure rounded corners during focus/active state */
+}
+
+.player-grid-radio-group .ant-radio-button-wrapper:not(:first-child)::before {
+    display: none !important;
+}
+
+.player-grid-radio-group .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+    background-color: #008aff !important;
+    color: white !important;
+}
+
+.player-grid-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}

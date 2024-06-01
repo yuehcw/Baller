@@ -1,18 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Row, Col, Input } from "antd";
+import { Button, Row, Col, Input, notification } from "antd";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { PlayersContext } from "../../context/PlayersContext";
-import { RightCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
-import { notification } from "antd";
+import {
+  RightCircleOutlined,
+  CloseCircleOutlined,
+  CaretRightOutlined,
+} from "@ant-design/icons";
 import "./MyTeamToolbar.css";
 
 const MyTeamToolbar = ({
+  playerImage,
+  playerFirstName,
+  playerLastName,
   playerGC,
   player_Id,
   playerId,
   playerShares,
   setSelectedPlayer,
+  setSelectedPlayerId, // Add this prop
   onTransactionComplete,
   onClose,
 }) => {
@@ -23,6 +30,7 @@ const MyTeamToolbar = ({
   const [buyShareAmount, setBuyShareAmount] = useState("");
   const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [placeholder, setPlaceholder] = useState(`Max: ${playerShares}`);
 
   useEffect(() => {
     if (user) {
@@ -30,6 +38,10 @@ const MyTeamToolbar = ({
       setRemainingBudget(user.GC);
     }
   }, [user]);
+
+  useEffect(() => {
+    setPlaceholder(`Max: ${playerShares}`);
+  }, [playerShares]);
 
   const handleAddToTeam = async () => {
     if (!buyShareAmount) {
@@ -57,7 +69,8 @@ const MyTeamToolbar = ({
         `${process.env.REACT_APP_API_URL}/users/addToMyTeam`,
         {
           playerId: playerId,
-          playerGC: playerGC * Number(buyShareAmount),
+          playerGC: playerGC,
+          playerPrice: playerGC * Number(buyShareAmount),
           playerShares: Number(buyShareAmount),
         },
       );
@@ -67,8 +80,14 @@ const MyTeamToolbar = ({
         if (onTransactionComplete) {
           onTransactionComplete();
         }
+        setIsAnimating(true);
+        setTimeout(() => {
+          setIsVisible(false);
+          setSelectedPlayer(null);
+          setSelectedPlayerId(null); // Ensure player ID is also deselected
+          onClose(); // Close the toolbar
+        }, 500); // Match the duration of the CSS animation
       }
-      setSelectedPlayer(null);
     } catch (error) {
       console.error("Error adding player to team: ", error);
       if (
@@ -104,9 +123,13 @@ const MyTeamToolbar = ({
     setTimeout(() => {
       setIsVisible(false);
       setSelectedPlayer(null);
+      setSelectedPlayerId(null); // Ensure player ID is also deselected
       onClose();
     }, 500); // Delay to match animation duration
   };
+
+  const playerInTeam =
+    user && user.myTeam.some((teamPlayer) => teamPlayer.playerId === playerId);
 
   return (
     isVisible && (
@@ -116,58 +139,86 @@ const MyTeamToolbar = ({
         </div>
         <Row justify="space-between" align="middle" className="toolbar-row">
           <Col className="toolbar-info-col">
+            <img
+              src={playerImage.replace("260x190", "520x380")}
+              alt={`${playerFirstName} ${playerLastName}`}
+              className="player-list-image"
+            />
             <div className="toolbar-info-block">
-              <div className="toolbar-info-title">Players</div>
+              <div className="toolbar-info-title">Player GC</div>
               <div className="toolbar-info-value">
-                {teamPlayers} / 60 &nbsp;
-                <RightCircleOutlined />
-                &nbsp;{" "}
-                <span className="toolbar-info-value-after">
-                  {teamPlayers + 1} / 60{" "}
-                </span>
-              </div>
-            </div>
-            <div className="toolbar-info-block">
-              <div className="toolbar-info-title">Remaining</div>
-              <div className="toolbar-info-value">
-                $ {remainingBudget.toFixed(1)} GC &nbsp;
-                <RightCircleOutlined />
-                &nbsp;{" "}
                 <span
                   className="toolbar-info-value-after"
                   style={{
-                    color: remainingAfterAddition < 0 ? "red" : "inherit",
+                    color: "#1677FF",
                   }}
                 >
-                  $ {remainingAfterAddition} GC{" "}
+                  {playerGC}
                 </span>
               </div>
             </div>
+            <span className="toolbar-info-symbol">x</span>
+            <div className="toolbar-info-value">
+              <Input
+                type="number"
+                className="share-input"
+                value={buyShareAmount}
+                onChange={(e) => setBuyShareAmount(e.target.value)}
+                placeholder={placeholder}
+                min="1"
+                max={playerShares}
+                style={{ marginRight: "10px" }}
+                onMouseEnter={() => setPlaceholder("")}
+                onMouseLeave={() => setPlaceholder(`Max: ${playerShares}`)}
+              />
+            </div>
+            <span className="toolbar-info-symbol">=</span>
             <div className="toolbar-info-block">
-              <div className="toolbar-info-title">Shares</div>
+              <div className="toolbar-info-title">Remaining</div>
               <div className="toolbar-info-value">
-                <Input
-                  type="number"
-                  className="share-input"
-                  value={buyShareAmount}
-                  onChange={(e) => setBuyShareAmount(e.target.value)}
-                  placeholder={`Max: ${playerShares}`}
-                  min="1"
-                  max={playerShares}
-                  style={{ marginRight: "10px" }}
-                />
+                <span
+                  className="toolbar-info-value-after"
+                  style={{
+                    color: remainingAfterAddition < 0 ? "red" : "#1677FF",
+                  }}
+                >
+                  {remainingAfterAddition} GC{" "}
+                </span>
               </div>
             </div>
           </Col>
           <Col className="toolbar-button-col">
-            <Button
-              type="primary"
-              className="continue-button"
-              onClick={handleAddToTeam}
-              disabled={teamPlayers + 1 > 60}
-            >
-              Continue
-            </Button>
+            <div className="toolbar-info-block">
+              <div className="toolbar-info-title">Players</div>
+              <div className="toolbar-info-value">
+                {teamPlayers + 1 > 50 ? (
+                  <span className="toolbar-info-value-after">Max</span>
+                ) : (
+                  <>
+                    {teamPlayers} / 50 &nbsp;
+                    {!playerInTeam && (
+                      <>
+                        <CaretRightOutlined />
+                        &nbsp;{" "}
+                        <span className="toolbar-info-value-after">
+                          {teamPlayers + 1} / 50{" "}
+                        </span>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="toolbar-info-block">
+              <Button
+                type="primary"
+                className="continue-button"
+                onClick={handleAddToTeam}
+                disabled={teamPlayers + 1 > 60}
+              >
+                Continue
+              </Button>
+            </div>
           </Col>
         </Row>
       </div>

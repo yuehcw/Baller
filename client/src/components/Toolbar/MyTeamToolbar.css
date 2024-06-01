@@ -48,7 +48,7 @@
     justify-content: center;
     height: 100%;
     gap: 50px;
-    margin-left: 50px;
+    margin-left: 100px;
 }
 
 .toolbar-info-block {
@@ -76,6 +76,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    gap: 50px;
 }
 
 .continue-button {
@@ -86,7 +88,34 @@
 }
 
 .share-input {
-    width: 100px;
+    background-color: #11131a;
+    border: 1px solid #11131a;
+    border-radius: 5px;
+    text-align: center;
+    height: 40px;
+    width: 200px;
+    color: white;
+}
+
+.share-input:hover, .share-input:focus {
+    background-color: #c0c0c0; /* background color on hover */
+    border-color: #11131A;
+    color:#11131a;
+    outline: none;
+}
+
+.share-input::placeholder {
+    color: white;
+}
+
+.share-input:hover::placeholder {
+    color: transparent;
+}
+
+.share-input::-webkit-inner-spin-button,
+.share-input::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* hides the default spin buttons in WebKit browsers */
+    margin: 0;
 }
 
 .toolbar-close {
@@ -96,4 +125,16 @@
     font-size: 24px;
     cursor: pointer;
     color: #ffffff;
+}
+
+.toolbar-info-playerGC {
+    display: flex;
+    justify-content: space-between;
+}
+
+.toolbar-info-symbol {
+    font-family: 'Palatino', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    color: #60616d;
 }

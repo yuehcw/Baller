@@ -19,6 +19,7 @@ const MyTeamPage = () => {
   const [myPlayers, setMyPlayers] = useState([]);
   const [selectedPlayerId, setSelectedPlayerId] = useState(null);
   const [positionFilter, setPositionFilter] = useState("");
+  const [myPositionFilter, setMyPositionFilter] = useState("");
   const [priceRange, setPriceRange] = useState([
     Number.NEGATIVE_INFINITY,
     Number.POSITIVE_INFINITY,
@@ -48,20 +49,9 @@ const MyTeamPage = () => {
     fetchPlayers();
   }, [players]);
 
-  const guards = myPlayers.filter(
-    (player) => player && player.position && player.position.includes("G"),
-  );
-  const forwards = myPlayers.filter(
-    (player) => player && player.position && player.position.includes("F"),
-  );
-  const centers = myPlayers.filter(
-    (player) => player && player.position && player.position.includes("C"),
-  );
+  const isEmpty = myPlayers.length === 0;
 
   const [toolbarOpen, setToolbarOpen] = useState(false);
-
-  const isEmpty =
-    guards.length === 0 && forwards.length === 0 && centers.length === 0;
 
   const onCloseToolbar = () => {
     setSelectedPlayerId(null);
@@ -74,6 +64,18 @@ const MyTeamPage = () => {
     setSelectedPlayer(player);
     setToolbarOpen(true);
   };
+
+  const handlePositionChange = (position) => {
+    if (position === "All") {
+      setMyPositionFilter("");
+    } else {
+      setMyPositionFilter(position);
+    }
+  };
+
+  const filteredPlayers = myPlayers.filter((player) =>
+    player.position.includes(myPositionFilter),
+  );
 
   return (
     <div className="myTeamPage-content">
@@ -94,15 +96,11 @@ const MyTeamPage = () => {
             </div>
           ) : (
             <>
-              {guards.length > 0 && (
-                <PlayerGridList title="Guards" players={guards} />
-              )}
-              {forwards.length > 0 && (
-                <PlayerGridList title="Forwards" players={forwards} />
-              )}
-              {centers.length > 0 && (
-                <PlayerGridList title="Centers" players={centers} />
-              )}
+              <PlayerGridList
+                title="My Players"
+                players={filteredPlayers}
+                onPositionChange={handlePositionChange}
+              ></PlayerGridList>
             </>
           )}
         </div>
@@ -117,7 +115,7 @@ const MyTeamPage = () => {
             selectedPlayer={selectedPlayer}
             setSelectedPlayer={setSelectedPlayer}
             selectedPlayerId={selectedPlayerId}
-            setSelectedPlayerId={setSelectedPlayerId}
+            setSelectedPlayerId={setSelectedPlayerId} // Pass this prop
             priceRange={priceRange}
             positionFilter={positionFilter}
             toolbarOpen={toolbarOpen}
@@ -128,11 +126,15 @@ const MyTeamPage = () => {
       {selectedPlayer && (
         <div>
           <MyTeamToolbar
+            playerImage={selectedPlayer.image}
+            playerFirstName={selectedPlayer.firstName}
+            playerLastName={selectedPlayer.lastName}
             playerGC={selectedPlayer.currentIndex}
             player_Id={selectedPlayer._id}
             playerId={selectedPlayer.id}
             playerShares={selectedPlayer.shares}
             setSelectedPlayer={setSelectedPlayer}
+            setSelectedPlayerId={setSelectedPlayerId}
             onTransactionComplete={refreshPlayersData}
             onClose={onCloseToolbar}
           />

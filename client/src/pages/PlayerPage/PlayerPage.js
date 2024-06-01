@@ -70,11 +70,15 @@ const PlayerCard = () => {
       {selectedPlayer && (
         <div>
           <MyTeamToolbar
+            playerImage={selectedPlayer.image}
+            playerFirstName={selectedPlayer.firstName}
+            playerLastName={selectedPlayer.lastName}
             playerGC={selectedPlayer.currentIndex}
             player_Id={selectedPlayer._id}
             playerId={selectedPlayer.id}
             playerShares={selectedPlayer.shares}
             setSelectedPlayer={setSelectedPlayer}
+            setSelectedPlayerId={() => {}}
             onTransactionComplete={handleTransactionComplete}
             onClose={() => {}}
           />

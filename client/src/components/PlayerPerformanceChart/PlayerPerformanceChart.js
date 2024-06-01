@@ -106,6 +106,7 @@ const PlayerPerformanceChart = ({ player }) => {
       <div className="performance-chart-header">
         <h2>Performance</h2>
         <Radio.Group
+          className="performance-radio-group"
           onChange={(e) => setStatType(e.target.value)}
           value={statType}
         >
