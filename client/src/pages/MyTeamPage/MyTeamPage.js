@@ -137,6 +137,8 @@ const MyTeamPage = () => {
             setSelectedPlayerId={setSelectedPlayerId}
             onTransactionComplete={refreshPlayersData}
             onClose={onCloseToolbar}
+            mode={"buy"}
+            transactionId={() => {}}
           />
         </div>
       )}

@@ -98,9 +98,9 @@
 }
 
 .share-input:hover, .share-input:focus {
-    background-color: #c0c0c0; /* background color on hover */
-    border-color: #11131A;
-    color:#11131a;
+    background-color: #11131a;
+    border: 1px solid #11131a;
+    color: white;
     outline: none;
 }
 

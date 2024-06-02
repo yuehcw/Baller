@@ -58,7 +58,8 @@
 }
 
 .logo {
-    height: 80px; /* Adjust based on your logo size */
+    height: 140px; /* Adjust based on your logo size */
+    width: 160px;
 }
 
 .user-info {

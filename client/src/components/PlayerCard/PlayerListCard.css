@@ -10,6 +10,11 @@
     cursor: pointer;
 }
 
+
+.player-list-card:hover {
+    border-color: #1890ff;
+}
+
 .player-list-card.selected {
     border-color: #1890ff;
 }

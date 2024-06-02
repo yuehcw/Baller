@@ -1,13 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import FlagContainer from "../FlagContainer/FlagContainer";
-import { Button, Badge } from "antd";
-import { HeartFilled } from "@ant-design/icons";
+import { Button, Badge, Popover, Statistic } from "antd";
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  DollarOutlined,
+  HeartFilled,
+  MinusOutlined,
+} from "@ant-design/icons";
 import { ToolbarContext } from "../../context/ToolbarContext";
 import { UserContext } from "../../context/UserContext";
 import yourPlayer from "../../image/your-player.png";
+import moment from "moment";
 import "./PlayerInfo.css";
 
-const PlayerInfo = ({ player }) => {
+const PlayerInfo = ({ player, setToolbarMode, setTransactionId }) => {
   const countryToFlagUrl = (countryName) => {
     return `https://upload.wikimedia.org/wikipedia/commons/${getCountryFlagFileName(countryName)}`;
   };
@@ -114,21 +121,111 @@ const PlayerInfo = ({ player }) => {
   const [isAdded, setIsAdded] = useState(false);
   const { setSelectedPlayer } = useContext(ToolbarContext);
 
+  const handleAddToTeamButton = async () => {
+    setSelectedPlayer(player);
+    setToolbarMode("buy");
+    await refreshUserData();
+  };
+
+  const handleSellButton = async (transactionId) => {
+    setSelectedPlayer(player);
+    setToolbarMode("sell");
+    setTransactionId(transactionId);
+    await refreshUserData();
+  };
+
+  const getPriceComparisonClass = (currentPrice, previousPrice) => {
+    const priceComparison = Math.round(
+      ((currentPrice - previousPrice) / previousPrice) * 100,
+    );
+
+    if (priceComparison > 0) {
+      return { class: "player-price-increased", comparison: priceComparison };
+    } else if (priceComparison < 0) {
+      return { class: "player-price-dropped", comparison: priceComparison };
+    } else {
+      return { class: "player-price-neutral", comparison: priceComparison };
+    }
+  };
+
+  const transactionContent = user
+    ? user.myTeam
+        .find((teamPlayer) => teamPlayer.playerId === player.id)
+        ?.transactions.map((transaction, index) => {
+          const { class: priceComparisonClass, comparison: priceComparison } =
+            getPriceComparisonClass(player.currentIndex, transaction.price);
+
+          return (
+            <div key={index} className="transaction-item">
+              <div className="transaction-date">
+                <span>
+                  {moment(transaction.createdAt).format("YYYY/MM/DD")}
+                </span>
+              </div>
+              <div className="transaction-detail">
+                <span>Price: {transaction.price}</span>
+                <div className={`player-price ${priceComparisonClass}`}>
+                  {priceComparisonClass === "player-price-increased" ? (
+                    <Statistic
+                      value={priceComparison}
+                      valueStyle={{
+                        color: "#3f8600",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                        marginLeft: "10px",
+                      }}
+                      prefix={<ArrowUpOutlined />}
+                      suffix="%"
+                    />
+                  ) : priceComparisonClass === "player-price-dropped" ? (
+                    <Statistic
+                      value={priceComparison}
+                      valueStyle={{
+                        color: "#cf1322",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                        marginLeft: "10px",
+                      }}
+                      prefix={<ArrowDownOutlined />}
+                      suffix="%"
+                    />
+                  ) : priceComparisonClass === "player-price-neutral" ? (
+                    <Statistic
+                      value={priceComparison}
+                      valueStyle={{
+                        color: "#60616d",
+                        fontSize: "13px",
+                        fontWeight: "bold",
+                        marginLeft: "10px",
+                      }}
+                      prefix={<MinusOutlined />}
+                      suffix="%"
+                    />
+                  ) : null}
+                </div>
+              </div>
+              <div className="transaction-detail">
+                <span>Shares: {transaction.shares}</span>
+              </div>
+              <div className="transaction-icon">
+                <DollarOutlined
+                  className="large-icon"
+                  onClick={() => handleSellButton(transaction._id)}
+                />
+              </div>
+            </div>
+          );
+        })
+    : null;
+
   useEffect(() => {
     if (user && user.myTeam && player) {
       const isPlayerInTeam = user.myTeam.some(
         (teamPlayer) => teamPlayer.playerId === player.id,
       );
-      console.log("Player ID:", player.id);
-      console.log("Is player in team:", isPlayerInTeam);
       setIsAdded(isPlayerInTeam);
     }
   }, [user, player]);
-
-  const handleAddToTeamButton = async () => {
-    setSelectedPlayer(player);
-    await refreshUserData();
-  };
 
   return (
     <div className="player-info">
@@ -157,9 +254,21 @@ const PlayerInfo = ({ player }) => {
               type="primary"
               onClick={handleAddToTeamButton}
               className="player-add-button"
+              disabled={player.shares === 0}
             >
-              $ {player.currentIndex} GC/share
+              {player.shares === 0
+                ? "No shares available"
+                : `$ ${player.currentIndex} GC/share`}
             </Button>
+            <Popover
+              content={transactionContent}
+              title="Transaction History"
+              placement="rightBottom"
+              overlayClassName="custom-popover"
+              overlayStyle={{ width: "40%" }}
+            >
+              <Button className="player-sale-button">Sell</Button>
+            </Popover>
           </>
         ) : (
           <>
@@ -167,8 +276,11 @@ const PlayerInfo = ({ player }) => {
               type="primary"
               onClick={handleAddToTeamButton}
               className="player-add-button"
+              disabled={player.shares === 0}
             >
-              $ {player.currentIndex} GC/share
+              {player.shares === 0
+                ? "No shares available"
+                : `$ ${player.currentIndex} GC/share`}
             </Button>
             <Button
               className="player-add-tolist"

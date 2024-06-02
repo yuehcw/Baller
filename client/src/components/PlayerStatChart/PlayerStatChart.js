@@ -25,15 +25,13 @@ const PlayerStatChart = ({ player }) => {
         </div>
         <div className="stat-row">
           <div>
-            <FontAwesomeIcon icon={faChessKing} className="icon" /> Offensive
-            rebounds
+            <FontAwesomeIcon icon={faChessKing} className="icon" /> Oreb
           </div>
           <span>{stats.offReb}</span>
         </div>
         <div className="stat-row">
           <div>
-            <FontAwesomeIcon icon={faChessQueen} className="icon" /> Defensive
-            rebounds
+            <FontAwesomeIcon icon={faChessQueen} className="icon" /> Dreb
           </div>
           <span>{stats.defReb}</span>
         </div>

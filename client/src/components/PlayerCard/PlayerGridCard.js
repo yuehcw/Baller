@@ -19,30 +19,55 @@ const PlayerGridCard = ({ player }) => {
     navigate(`/player/${player.playerId}`);
   };
 
+  const getPriceComparisonClass = (currentPrice, previousPrice) => {
+    const priceComparison = Math.round(
+      ((currentPrice - previousPrice) / previousPrice) * 100,
+    );
+
+    if (priceComparison > 0) {
+      return { class: "player-price-increased", comparison: priceComparison };
+    } else if (priceComparison < 0) {
+      return { class: "player-price-dropped", comparison: priceComparison };
+    } else {
+      return { class: "player-price-neutral", comparison: priceComparison };
+    }
+  };
+
   const playerInTeam = user.myTeam.find(
     (teamPlayer) => teamPlayer.playerId === player.playerId,
   );
 
   let priceComparisonClass = "";
   let priceComparison = 0;
+  let totalShares = 0;
 
   if (playerInTeam) {
-    priceComparison = Math.round(
-      ((player.currentIndex - playerInTeam.price) / playerInTeam.price) * 100,
+    totalShares = playerInTeam.transactions.reduce(
+      (total, transaction) => total + transaction.shares,
+      0,
     );
-    if (priceComparison > 0) {
-      priceComparisonClass = "player-price-increased";
-    } else if (priceComparison < 0) {
-      priceComparisonClass = "player-price-dropped";
-    } else {
-      priceComparisonClass = "player-price-neutral";
-    }
+
+    let mostProfitableTransaction = playerInTeam.transactions.reduce(
+      (maxTransaction, currentTransaction) => {
+        const profitCurrent = player.currentIndex - currentTransaction.price;
+        const profitMax = player.currentIndex - maxTransaction.price;
+        return profitCurrent > profitMax ? currentTransaction : maxTransaction;
+      },
+      playerInTeam.transactions[0],
+    );
+
+    const { class: comparisonClass, comparison } = getPriceComparisonClass(
+      player.currentIndex,
+      mostProfitableTransaction.price,
+    );
+    priceComparisonClass = comparisonClass;
+    priceComparison = comparison;
   }
 
   return (
     <div className="player-grid-card" onClick={handleNavigate}>
       <Badge
-        count={player.shares > 999 ? "999+" : player.shares}
+        count={totalShares > 999 ? "999+" : totalShares}
         overflowCount={999}
         style={{
           background: "linear-gradient(180deg, #1049c4 0%, #00CFFF 100%)",

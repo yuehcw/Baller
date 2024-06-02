@@ -4,6 +4,7 @@ import { Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../../context/UserContext";
 import { ToolbarContext } from "../../context/ToolbarContext";
+import logo from "../../image/logo.png";
 import "./Header.css";
 
 const Header = () => {
@@ -47,7 +48,7 @@ const Header = () => {
   return (
     <div className="menu-container">
       <div className="menu-left">
-        <img src="/path/to/logo.png" alt="Logo" className="logo" />
+        <img src={logo} alt="Logo" className="logo" />
       </div>
       <div className="menu-center">
         <div

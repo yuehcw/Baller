@@ -14,6 +14,8 @@ const PlayerCard = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [player, setPlayer] = useState(null);
+  const [toolbarMode, setToolbarMode] = useState("buy");
+  const [selectedTransactionId, setSelectedTransactionId] = useState(null);
   const { selectedPlayer, setSelectedPlayer } = useContext(ToolbarContext);
   const { refreshUserData } = useContext(UserContext);
 
@@ -55,7 +57,11 @@ const PlayerCard = () => {
       </button>
       <div className="player-card-container">
         <div className="player-card-left">
-          <PlayerInfo player={player} />
+          <PlayerInfo
+            player={player}
+            setToolbarMode={setToolbarMode}
+            setTransactionId={setSelectedTransactionId}
+          />
         </div>
         <div className="player-card-right">
           <div className="player-card-right-top">
@@ -81,6 +87,8 @@ const PlayerCard = () => {
             setSelectedPlayerId={() => {}}
             onTransactionComplete={handleTransactionComplete}
             onClose={() => {}}
+            mode={toolbarMode}
+            transactionId={selectedTransactionId}
           />
         </div>
       )}

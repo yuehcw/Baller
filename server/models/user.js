@@ -1,6 +1,21 @@
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 
+const transactionSchema = new mongoose.Schema(
+  {
+    price: {
+      type: Number,
+      required: true,
+      set: (v) => parseFloat(v.toFixed(1)),
+    },
+    shares: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
+
 const UserSchema = new mongoose.Schema(
   {
     userId: {
@@ -31,15 +46,8 @@ const UserSchema = new mongoose.Schema(
           type: Number,
           ref: "NBAPlayer",
         },
-        shares: {
-          type: Number,
-          required: true,
-        },
-        price: {
-          type: Number,
-          required: true,
-          set: (v) => parseFloat(v.toFixed(1)),
-        },
+        transactions: [transactionSchema],
+        _id: false,
       },
     ],
   },

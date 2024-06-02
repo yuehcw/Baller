@@ -59,9 +59,9 @@
 }
 
 .player-card-right-bottom > .price-chart {
-    flex: 8;
+    flex: 7;
 }
 
 .player-card-right-bottom > .stat-chart {
-    flex: 2;
+    flex: 3;
 }
