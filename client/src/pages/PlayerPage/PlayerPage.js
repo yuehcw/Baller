@@ -16,6 +16,8 @@ const PlayerCard = () => {
   const [player, setPlayer] = useState(null);
   const [toolbarMode, setToolbarMode] = useState("buy");
   const [selectedTransactionId, setSelectedTransactionId] = useState(null);
+  const [selectedTransactionPlayerGC, setSelectedTransactionPlayerGC] =
+    useState(null);
   const { selectedPlayer, setSelectedPlayer } = useContext(ToolbarContext);
   const { refreshUserData } = useContext(UserContext);
 
@@ -30,6 +32,10 @@ const PlayerCard = () => {
       console.error("Error fetching player data:", error);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     fetchPlayer();
@@ -61,6 +67,7 @@ const PlayerCard = () => {
             player={player}
             setToolbarMode={setToolbarMode}
             setTransactionId={setSelectedTransactionId}
+            setTransactionPlayerGC={setSelectedTransactionPlayerGC}
           />
         </div>
         <div className="player-card-right">
@@ -89,6 +96,7 @@ const PlayerCard = () => {
             onClose={() => {}}
             mode={toolbarMode}
             transactionId={selectedTransactionId}
+            transactionPlayerGC={selectedTransactionPlayerGC}
           />
         </div>
       )}

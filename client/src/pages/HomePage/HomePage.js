@@ -1,34 +1,140 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, ConfigProvider } from "antd";
-import { TinyColor } from "@ctrl/tinycolor";
+import React, { useEffect, useRef } from "react";
+import { Button, Collapse } from "antd";
+import { useNavigate } from "react-router-dom";
 import homepageImage from "../../image/homepage.webp";
+import carousel1 from "../../image/homepage-carousel/1.png";
+import carousel2 from "../../image/homepage-carousel/2.png";
+import carousel3 from "../../image/homepage-carousel/3.png";
+import carousel4 from "../../image/homepage-carousel/4.png";
+import carousel5 from "../../image/homepage-carousel/5.png";
+import carousel6 from "../../image/homepage-carousel/6.png";
+import carousel7 from "../../image/homepage-carousel/7.png";
+import carousel8 from "../../image/homepage-carousel/8.png";
+import carousel9 from "../../image/homepage-carousel/9.png";
+import carousel10 from "../../image/homepage-carousel/10.png";
+import carousel11 from "../../image/homepage-carousel/11.png";
+import carousel12 from "../../image/homepage-carousel/12.png";
+import carousel13 from "../../image/homepage-carousel/13.png";
+import carousel14 from "../../image/homepage-carousel/14.png";
+import carousel15 from "../../image/homepage-carousel/15.png";
+import r1 from "../../image/ranking1.png";
+import r2 from "../../image/ranking2.png";
+import r3 from "../../image/ranking3.png";
 import "./HomePage.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const HomePage = () => {
-  // const [nbaNews, setNBANews] = useState([]);
-  // const [nbaPlayers] = useState([]);
-  // const colors1 = ["#6253E1", "#04BEFE"];
-  // const getHoverColors = (colors) =>
-  //   colors.map((color) => new TinyColor(color).lighten(5).toString());
-  // const getActiveColors = (colors) =>
-  //   colors.map((color) => new TinyColor(color).darken(5).toString());
-  //
-  // useEffect(() => {
-  //   const fetchNBANews = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${process.env.REACT_APP_API_URL}/nba/nba-news`,
-  //         { headers: { noAuth: true } },
-  //       );
-  //       setNBANews(response.data);
-  //     } catch (error) {
-  //       console.error("Error Client side fetching NBA news:", error);
-  //     }
-  //   };
-  //
-  //   fetchNBANews();
-  // }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/rankings");
+  };
+
+  const scrollToFAQ = () => {
+    const faqSection = document.getElementById("homepage-qa-section");
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const carouselRef = useRef(null);
+
+  const text1 = `
+  This game is designed for basketball enthusiasts and should be accessible at no cost to everyone who loves the sport.
+`;
+
+  const text2 = `
+  GC represents 'Game Currency,' a virtual currency that players can use to purchase athletes based on their current market value within the game.
+`;
+
+  const text3 = `
+  The index displayed on the user's 'My Team' page highlights the most profitable transaction made for that player.
+`;
+
+  const text4 = `
+  To view the transaction history of a player, hover over the 'Sell' button after choosing a player from your team.
+`;
+
+  const text5 = `
+  For instance, if you purchased 100 shares of LeBron at a price of 35 and later sold them at 40, the profit from this transaction would be calculated as 
+(
+40
+×
+100
+)
+−
+(
+35
+×
+100
+)
+=
+500
+(40×100)−(35×100)=500 points. The ranking system, based on a specific timeframe, lists the top 10 users with the most points. Note that the points can also be negative if shares are sold at a price lower than the purchase price.
+`;
+
+  const text6 = `
+  This game is currently under development and will soon include additional features such as the ability for users to trade with each other. Please stay tuned for the latest updates!
+  `;
+
+  const items = [
+    {
+      key: "1",
+      label: "Is there a fee to participate in the game?",
+      children: <p>{text1}</p>,
+    },
+    {
+      key: "2",
+      label: "What is the significance of GC within the game?",
+      children: <p>{text2}</p>,
+    },
+    {
+      key: "3",
+      label: "What does the index represent on the 'My Team' page?",
+      children: <p>{text3}</p>,
+    },
+    {
+      key: "4",
+      label: "Where can I view the details of all my transactions?",
+      children: <p>{text4}</p>,
+    },
+    {
+      key: "5",
+      label: "Can you explain how the ranking system operates?",
+      children: <p>{text5}</p>,
+    },
+    {
+      key: "6",
+      label: "What happens when all shares of a player are sold out?",
+      children: <p>{text6}</p>,
+    },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollWidth = carouselRef.current.scrollWidth;
+      const clientWidth = carouselRef.current.clientWidth;
+      const scrollLeft = carouselRef.current.scrollLeft;
+
+      if (scrollLeft + clientWidth >= scrollWidth) {
+        carouselRef.current.scrollLeft = 0;
+      }
+    };
+
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        carouselRef.current.scrollLeft += 0.5;
+        handleScroll();
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="homepage-content">
@@ -47,22 +153,87 @@ const HomePage = () => {
             marketplace today!
           </p>
 
-          <Button type="default" size="large" className="homepage-start-button">
+          <Button
+            type="default"
+            size="large"
+            className="homepage-start-button"
+            onClick={scrollToFAQ}
+          >
             LEARN MORE
           </Button>
         </div>
       </div>
-      <div className="homepage-nba-news">
-        {/*<h3>NBA News</h3>*/}
-        {/*<ul>*/}
-        {/*  {nbaNews.map((newsItem, index) => (*/}
-        {/*    <li key={index}>*/}
-        {/*      <a href={newsItem.url} target="_blank" rel="noopener noreferrer">*/}
-        {/*        {newsItem.title}*/}
-        {/*      </a>*/}
-        {/*    </li>*/}
-        {/*  ))}*/}
-        {/*</ul>*/}
+      <h2 className="homepage-second-section">There's value in being a fan.</h2>
+      <div className="homepage-carousel-section" ref={carouselRef}>
+        <div className="scrolling-images">
+          {[...Array(2)].map((_, i) => (
+            <React.Fragment key={i}>
+              <img src={carousel1} alt="slide-1" className="carousel-image" />
+              <img src={carousel2} alt="slide-2" className="carousel-image" />
+              <img src={carousel3} alt="slide-3" className="carousel-image" />
+              <img src={carousel4} alt="slide-4" className="carousel-image" />
+              <img src={carousel5} alt="slide-5" className="carousel-image" />
+              <img src={carousel6} alt="slide-6" className="carousel-image" />
+              <img src={carousel7} alt="slide-7" className="carousel-image" />
+              <img src={carousel8} alt="slide-8" className="carousel-image" />
+              <img src={carousel9} alt="slide-9" className="carousel-image" />
+              <img src={carousel10} alt="slide-10" className="carousel-image" />
+              <img src={carousel11} alt="slide-11" className="carousel-image" />
+              <img src={carousel12} alt="slide-12" className="carousel-image" />
+              <img src={carousel13} alt="slide-13" className="carousel-image" />
+              <img src={carousel14} alt="slide-14" className="carousel-image" />
+              <img src={carousel15} alt="slide-15" className="carousel-image" />
+              {/* Repeat images to create a continuous effect */}
+              <img src={carousel1} alt="slide-1" className="carousel-image" />
+              <img src={carousel2} alt="slide-2" className="carousel-image" />
+              <img src={carousel3} alt="slide-3" className="carousel-image" />
+              <img src={carousel4} alt="slide-4" className="carousel-image" />
+              <img src={carousel5} alt="slide-5" className="carousel-image" />
+              <img src={carousel6} alt="slide-6" className="carousel-image" />
+              <img src={carousel7} alt="slide-7" className="carousel-image" />
+              <img src={carousel8} alt="slide-8" className="carousel-image" />
+              <img src={carousel9} alt="slide-9" className="carousel-image" />
+              <img src={carousel10} alt="slide-10" className="carousel-image" />
+              <img src={carousel11} alt="slide-11" className="carousel-image" />
+              <img src={carousel12} alt="slide-12" className="carousel-image" />
+              <img src={carousel13} alt="slide-13" className="carousel-image" />
+              <img src={carousel14} alt="slide-14" className="carousel-image" />
+              <img src={carousel15} alt="slide-15" className="carousel-image" />
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+      <div className="homepage-carousel-section-paragraph">
+        <p>
+          Keep an eye on player performance and market trends to sell your
+          shares at the most profitable time.
+        </p>
+      </div>
+      <div className="homepage-ranking-section">
+        <h2>Climb the Leaderboard, Earn Your Glory!</h2>
+        <div></div>
+        <img
+          src={r1}
+          alt="nba-homepage-ranking"
+          className="homepage-image-r1"
+        />
+        <img src={r2} alt="nba-homepage-ranking" className="homepage-image-r" />
+        <img src={r3} alt="nba-homepage-ranking" className="homepage-image-r" />
+        <Button
+          type="default"
+          className="homepage-ranking-button"
+          onClick={handleNavigate}
+        >
+          View the Rankings
+        </Button>
+      </div>
+      <div id="homepage-qa-section" className="homepage-qa-section">
+        <h2>Frequently Asked Question</h2>
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items}
+        />
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { ToolbarProvider } from "./context/ToolbarContext";
 import AxiosInterceptor from "./utils/AxiosInterceptor";
 import { PlayersProvider } from "./context/PlayersContext";
 import "./App.css";
+import RankingsPage from "./pages/RankPage/RankPage";
 
 const App = () => {
   return (
@@ -32,11 +33,10 @@ const App = () => {
                       <Route path="/" element={<HomePage />} />
                       <Route path="/player/:id" element={<PlayerPage />} />
                       <Route path="/home" element={<HomePage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/rankings" element={<RankingsPage />} />
                       <Route element={<PrivateRoute />}>
                         <Route path="/myteam" element={<MyTeamPage />} />
-                      </Route>
-                      <Route path="/login" element={<LoginPage />} />
-                      <Route element={<PrivateRoute />}>
                         <Route path="/profile" element={<UserPage />} />
                       </Route>
                     </Routes>

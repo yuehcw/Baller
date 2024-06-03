@@ -16,6 +16,21 @@ const transactionSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+const pointsSchema = new mongoose.Schema(
+  {
+    amount: {
+      type: Number,
+      required: true,
+      set: (v) => parseFloat(v.toFixed(1)),
+    },
+    timestamp: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false },
+);
+
 const UserSchema = new mongoose.Schema(
   {
     userId: {
@@ -35,7 +50,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    avatar: { type: String },
+    avatar: {
+      type: String,
+      default: null,
+    },
     GC: {
       type: Number,
       set: (v) => parseFloat(v.toFixed(1)),
@@ -50,6 +68,7 @@ const UserSchema = new mongoose.Schema(
         _id: false,
       },
     ],
+    points: [pointsSchema],
   },
   { timestamps: true },
 );

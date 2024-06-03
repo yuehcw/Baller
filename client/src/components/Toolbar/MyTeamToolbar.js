@@ -19,7 +19,8 @@ const MyTeamToolbar = ({
   onTransactionComplete,
   onClose,
   mode,
-  transactionId, // Add this line
+  transactionId,
+  transactionPlayerGC,
 }) => {
   const { user, refreshUserData } = useContext(UserContext);
   const { refreshPlayersData } = useContext(PlayersContext);
@@ -177,6 +178,7 @@ const MyTeamToolbar = ({
         throw new Error("Failed to update player shares");
       }
 
+      const cost = transactionPlayerGC * Number(sellShareAmount);
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/users/sellFromMyTeam`,
         {
@@ -184,6 +186,7 @@ const MyTeamToolbar = ({
           playerShares: Number(sellShareAmount),
           playerPrice: playerGC * Number(sellShareAmount),
           transactionId,
+          cost,
         },
       );
       if (response.status === 200) {

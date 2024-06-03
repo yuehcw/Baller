@@ -26,6 +26,10 @@ const MyTeamPage = () => {
   ]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (user) {
       setMyPlayers(user.myTeam);
     } else {

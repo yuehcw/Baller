@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Avatar, Popover } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { UserContext } from "../../context/UserContext";
@@ -8,14 +8,21 @@ import logo from "../../image/logo.png";
 import "./Header.css";
 
 const Header = () => {
-  const [activeItem, setActiveItem] = useState("home");
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState(
+    location.pathname.substring(1) || "home",
+  );
   const { setSelectedPlayer } = useContext(ToolbarContext);
   const navigate = useNavigate();
   const { user, logoutUser, refreshUserData } = useContext(UserContext);
 
   useEffect(() => {
-    refreshUserData(); // 確保 Header 獲取最新的用戶數據
+    refreshUserData();
   }, []);
+
+  useEffect(() => {
+    setActiveItem(location.pathname.substring(1) || "home");
+  }, [location]);
 
   const handleItemClick = (key) => {
     setActiveItem(key);
@@ -32,6 +39,15 @@ const Header = () => {
   const handlepersonalinfo = () => {
     setSelectedPlayer(null);
     navigate("/profile");
+  };
+
+  const formatAvatarUrl = (url) => {
+    if (url && url.startsWith("//")) {
+      const formattedUrl = "http:" + url;
+      console.log("Avatar URL:", formattedUrl);
+      return formattedUrl;
+    }
+    return url || "";
   };
 
   const content = (
@@ -64,11 +80,17 @@ const Header = () => {
           My Team
         </div>
         <div
-          className={`menu-item ${activeItem === "howtoplay" ? "active" : ""}`}
-          onClick={() => handleItemClick("login")}
+          className={`menu-item ${activeItem === "rankings" ? "active" : ""}`}
+          onClick={() => handleItemClick("rankings")}
         >
-          How to Play
+          Ranking
         </div>
+        {/*<div*/}
+        {/*  className={`menu-item ${activeItem === "howtoplay" ? "active" : ""}`}*/}
+        {/*  onClick={() => handleItemClick("login")}*/}
+        {/*>*/}
+        {/*  How to Play*/}
+        {/*</div>*/}
       </div>
       <div className="menu-right">
         {user ? (
@@ -76,8 +98,8 @@ const Header = () => {
             <Popover content={content}>
               <Avatar
                 size="large"
-                src={user.avatar || null}
-                icon={!user.avatar && <UserOutlined />}
+                src={formatAvatarUrl(user.avatar)}
+                icon={!user?.avatar && <UserOutlined />}
                 style={{
                   backgroundColor: "#c0c0c0",
                   verticalAlign: "middle",

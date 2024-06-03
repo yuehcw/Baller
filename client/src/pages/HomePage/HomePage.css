@@ -1,4 +1,12 @@
-/* HomePage specific styles */
+.homepage-content {
+    width: 100%;
+    background-color: #11131A;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .homepage-image-section {
     position: relative;
     width: 100%;
@@ -35,6 +43,7 @@
 }
 
 .homepage-start-button {
+    text-align: center;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 1rem;
@@ -53,6 +62,130 @@
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.9), 0 0 25px rgba(0, 123, 255, 0.7);
 }
 
-.homepage-nba-news {
-    padding: 20px;
+.homepage-ranking-button {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 20px 20px;
+    background-color: white;
+    color: #11131A;
+    border: none;
+    border-radius: 5px;
+    width: 12%;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.7), 0 0 20px rgba(0, 123, 255, 0.5);
+}
+
+.homepage-carousel-section {
+    width: 100%;
+    overflow: hidden; /* Hide overflow to ensure the images don't spill outside the container */
+    background-color: #11131a;
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homepage-second-section {
+    margin-top: 10%;
+    color: white;
+}
+
+.scrolling-images {
+    display: flex;
+    width: max-content; /* Ensure the width adjusts based on the content */
+}
+
+.carousel-image {
+    width: auto;
+    height: 200px; /* Adjust the height as needed */
+    margin-right: 10px;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.homepage-carousel-section-paragraph {
+    text-align: center;
+    padding-left: 35%;
+    padding-right: 35%;
+    padding-top: 2%;
+    color: white;
+}
+
+
+.homepage-ranking-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
+    color: white;
+    background-color: #11131A;
+    width: 100%;
+    height: 100%;
+}
+
+.homepage-image-r1 {
+    padding-top: 20px;
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    background-color: #11131A;
+}
+
+.homepage-image-r {
+    width: 30%;
+    height: 30%;
+    object-fit: cover;
+    background-color: #11131A;
+}
+
+.homepage-qa-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15%;
+    width: 50%;
+    height: 100%;
+}
+
+.homepage-qa-section > h2{
+    text-align: center;
+    color: white;
+    padding-bottom: 20px;
+}
+
+.homepage-custom-collapse {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #1a1a2e;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), /* Dark shadow on bottom right */
+    -5px -5px 15px rgba(42, 42, 60, 0.8); /* Lighter inset shadow on top left for depth */
+}
+
+.homepage-custom-collapse .ant-collapse-header{
+  color: white !important;
+    padding-bottom: 25px !important;
+    font-size: 18px !important;
+}
+
+
+.homepage-custom-collapse .ant-collapse-content p {
+    color: black; /* Color for paragraph text in content */
+    font-size: 15px;
 }

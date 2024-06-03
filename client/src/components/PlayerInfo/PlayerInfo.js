@@ -14,7 +14,12 @@ import yourPlayer from "../../image/your-player.png";
 import moment from "moment";
 import "./PlayerInfo.css";
 
-const PlayerInfo = ({ player, setToolbarMode, setTransactionId }) => {
+const PlayerInfo = ({
+  player,
+  setToolbarMode,
+  setTransactionId,
+  setTransactionPlayerGC,
+}) => {
   const countryToFlagUrl = (countryName) => {
     return `https://upload.wikimedia.org/wikipedia/commons/${getCountryFlagFileName(countryName)}`;
   };
@@ -127,10 +132,11 @@ const PlayerInfo = ({ player, setToolbarMode, setTransactionId }) => {
     await refreshUserData();
   };
 
-  const handleSellButton = async (transactionId) => {
+  const handleSellButton = async (transactionId, transactionPlayerGC) => {
     setSelectedPlayer(player);
     setToolbarMode("sell");
     setTransactionId(transactionId);
+    setTransactionPlayerGC(transactionPlayerGC);
     await refreshUserData();
   };
 
@@ -210,7 +216,9 @@ const PlayerInfo = ({ player, setToolbarMode, setTransactionId }) => {
               <div className="transaction-icon">
                 <DollarOutlined
                   className="large-icon"
-                  onClick={() => handleSellButton(transaction._id)}
+                  onClick={() =>
+                    handleSellButton(transaction._id, transaction.price)
+                  }
                 />
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import login_image from "../../image/basketball_illustration.png";
 import Signup from "../../components/Signup/Signup";
 import "./LoginPage.css";
@@ -50,6 +50,10 @@ const LoginPage = () => {
       setError(error.response.data.message);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="loginPage-content">

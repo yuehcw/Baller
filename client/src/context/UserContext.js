@@ -28,9 +28,9 @@ export const UserProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {
       console.error("Error fetching user data:", error);
-      if (error.response && error.response.status === 401) {
-        logoutUser();
-      }
+      // if (error.response && error.response.status === 401) {
+      //   logoutUser();
+      // }
     }
   };
 
