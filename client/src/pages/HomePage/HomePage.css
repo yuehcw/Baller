@@ -62,6 +62,70 @@
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.9), 0 0 25px rgba(0, 123, 255, 0.7);
 }
 
+.ranking-testimonials {
+    padding-left: 35%;
+    padding-right: 35%;
+    margin-top: 50px;
+}
+
+.ranking-testimonials > h3 {
+   text-align: center;
+    margin-bottom: 30px;
+}
+
+.ranking-testimonials-cards {
+    display: flex;
+    gap: 50px;
+}
+
+.testimonial-card {
+    color: white;
+    background: #1a1a2e;
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: 2px solid #333;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.testimonial-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), /* Dark shadow on bottom right */
+    -5px -5px 15px rgba(42, 42, 60, 0.8); /* Lighter inset shadow on top left for depth */
+}
+
+.testimonial-card blockquote {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border-left: none;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+
+.testimonial-card blockquote p {
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    padding-bottom: 10px; /* Add some padding at the bottom to space out from footer */
+}
+
+.testimonial-card blockquote footer {
+    margin-top: 10px;
+    font-size: 14px;
+    font-style: italic;
+    color: #ccc;
+}
+
 .homepage-ranking-button {
     margin-top: 50px;
     display: flex;
@@ -93,7 +157,10 @@
 
 .homepage-second-section {
     margin-top: 10%;
-    color: white;
+    margin-bottom: 4%;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .scrolling-images {
@@ -137,6 +204,13 @@
     height: 100%;
 }
 
+.homepage-ranking-section > h1 {
+    margin-bottom: 4%;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .homepage-image-r1 {
     padding-top: 20px;
     width: 30%;
@@ -162,6 +236,10 @@
 }
 
 .homepage-qa-section > h2{
+    margin-bottom: 4%;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
     color: white;
     padding-bottom: 20px;
@@ -176,14 +254,36 @@
     border-radius: 5px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), /* Dark shadow on bottom right */
     -5px -5px 15px rgba(42, 42, 60, 0.8); /* Lighter inset shadow on top left for depth */
+    margin-bottom: 1%;
 }
 
 .homepage-custom-collapse .ant-collapse-header{
   color: white !important;
-    padding-bottom: 25px !important;
+    padding: 15px 25px !important;
     font-size: 18px !important;
+    position: relative;
+    border-bottom: none !important;
+    border-radius: 10px; /* Optional: Add rounded corners */
 }
 
+.homepage-custom-collapse .ant-collapse-item {
+    border-radius: 10px; /* Optional: Add rounded corners */
+    overflow: hidden; /* Ensure rounded corners are visible */
+    border: none;
+}
+
+
+.homepage-custom-collapse .ant-collapse-header .ant-collapse-arrow {
+    color: white !important;
+    background-color: #1a1a2e;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 18px;
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
 
 .homepage-custom-collapse .ant-collapse-content p {
     color: black; /* Color for paragraph text in content */

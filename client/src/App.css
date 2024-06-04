@@ -18,8 +18,3 @@
     min-height: calc(100vh - 220px);
 }
 
-.app-footer {
-    margin-top: 100px;
-    padding: 20px; /* 可选：为页脚添加一些填充 */
-    background-color: #11131A; /* 确保背景色与应用背景色一致 */
-}

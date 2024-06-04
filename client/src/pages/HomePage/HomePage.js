@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Button, Collapse } from "antd";
+import { Button, Card, Collapse } from "antd";
 import { useNavigate } from "react-router-dom";
 import homepageImage from "../../image/homepage.webp";
 import carousel1 from "../../image/homepage-carousel/1.png";
@@ -17,9 +17,9 @@ import carousel12 from "../../image/homepage-carousel/12.png";
 import carousel13 from "../../image/homepage-carousel/13.png";
 import carousel14 from "../../image/homepage-carousel/14.png";
 import carousel15 from "../../image/homepage-carousel/15.png";
-import r1 from "../../image/ranking1.png";
-import r2 from "../../image/ranking2.png";
-import r3 from "../../image/ranking3.png";
+import r1 from "../../image/ranking1.jpg";
+import r2 from "../../image/ranking2.jpg";
+import r3 from "../../image/ranking3.jpg";
 import "./HomePage.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -35,12 +35,12 @@ const HomePage = () => {
     navigate("/rankings");
   };
 
-  const scrollToFAQ = () => {
-    const faqSection = document.getElementById("homepage-qa-section");
-    if (faqSection) {
-      faqSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+  // const scrollToFAQ = () => {
+  //   const faqSection = document.getElementById("homepage-qa-section");
+  //   if (faqSection) {
+  //     faqSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  //   }
+  // };
 
   const carouselRef = useRef(null);
 
@@ -82,32 +82,47 @@ const HomePage = () => {
   This game is currently under development and will soon include additional features such as the ability for users to trade with each other. Please stay tuned for the latest updates!
   `;
 
-  const items = [
+  const items1 = [
     {
       key: "1",
       label: "Is there a fee to participate in the game?",
       children: <p>{text1}</p>,
     },
+  ];
+
+  const items2 = [
     {
       key: "2",
       label: "What is the significance of GC within the game?",
       children: <p>{text2}</p>,
     },
+  ];
+
+  const items3 = [
     {
       key: "3",
       label: "What does the index represent on the 'My Team' page?",
       children: <p>{text3}</p>,
     },
+  ];
+
+  const items4 = [
     {
       key: "4",
       label: "Where can I view the details of all my transactions?",
       children: <p>{text4}</p>,
     },
+  ];
+
+  const items5 = [
     {
       key: "5",
       label: "Can you explain how the ranking system operates?",
       children: <p>{text5}</p>,
     },
+  ];
+
+  const items6 = [
     {
       key: "6",
       label: "What happens when all shares of a player are sold out?",
@@ -157,13 +172,13 @@ const HomePage = () => {
             type="default"
             size="large"
             className="homepage-start-button"
-            onClick={scrollToFAQ}
+            // onClick={scrollToFAQ}
           >
             LEARN MORE
           </Button>
         </div>
       </div>
-      <h2 className="homepage-second-section">There's value in being a fan.</h2>
+      <h1 className="homepage-second-section">There's value in being a fan.</h1>
       <div className="homepage-carousel-section" ref={carouselRef}>
         <div className="scrolling-images">
           {[...Array(2)].map((_, i) => (
@@ -210,8 +225,7 @@ const HomePage = () => {
         </p>
       </div>
       <div className="homepage-ranking-section">
-        <h2>Climb the Leaderboard, Earn Your Glory!</h2>
-        <div></div>
+        <h1>Climb the Leaderboard, Earn Your Glory!</h1>
         <img
           src={r1}
           alt="nba-homepage-ranking"
@@ -219,6 +233,38 @@ const HomePage = () => {
         />
         <img src={r2} alt="nba-homepage-ranking" className="homepage-image-r" />
         <img src={r3} alt="nba-homepage-ranking" className="homepage-image-r" />
+        <div className="ranking-testimonials">
+          <h3>What Our Users Say</h3>
+          <div className="ranking-testimonials-cards">
+            <Card className="testimonial-card" bordered={false}>
+              <blockquote>
+                <p>
+                  "The ranking system is incredibly motivating. It keeps me
+                  engaged and striving to improve my trades every day 🤑 📈"
+                </p>
+                <footer>- Alex Johnson </footer>
+              </blockquote>
+            </Card>
+            <Card className="testimonial-card" bordered={false}>
+              <blockquote>
+                <p>
+                  "I love the weekly updates and the competition. It adds a
+                  whole new level of excitement to the game! 😤"
+                </p>
+                <footer>- Samantha Lee </footer>
+              </blockquote>
+            </Card>
+            <Card className="testimonial-card" bordered={false}>
+              <blockquote>
+                <p>
+                  "The real-time updates and competition make the game much more
+                  engaging."
+                </p>
+                <footer>- Michael Brown </footer>
+              </blockquote>
+            </Card>
+          </div>
+        </div>
         <Button
           type="default"
           className="homepage-ranking-button"
@@ -232,7 +278,32 @@ const HomePage = () => {
         <Collapse
           accordion
           className="homepage-custom-collapse"
-          items={items}
+          items={items1}
+        />
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items2}
+        />
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items3}
+        />
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items4}
+        />
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items5}
+        />
+        <Collapse
+          accordion
+          className="homepage-custom-collapse"
+          items={items6}
         />
       </div>
     </div>
