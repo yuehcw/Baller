@@ -23,6 +23,7 @@ app.use(
     credentials: true,
   }),
 );
+
 // Make the cache available to the routes
 app.use((req, res, next) => {
   req.newsCache = newsCache;
