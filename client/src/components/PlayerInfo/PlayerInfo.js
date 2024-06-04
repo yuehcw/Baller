@@ -264,9 +264,7 @@ const PlayerInfo = ({
               className="player-add-button"
               disabled={player.shares === 0}
             >
-              {player.shares === 0
-                ? "No shares available"
-                : `$ ${player.currentIndex} GC/share`}
+              {player.shares === 0 ? "No shares available" : `Buy`}
             </Button>
             <Popover
               content={transactionContent}
@@ -310,7 +308,7 @@ const PlayerInfo = ({
         <h2>
           {player.firstName} {player.lastName}
         </h2>
-        <h2>{player.currentIndex} GC</h2>
+        <h2>$ {player.currentIndex} GC</h2>
       </div>
       <div className="player-info-team-container">
         <FlagContainer

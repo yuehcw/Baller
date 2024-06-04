@@ -270,7 +270,7 @@ const HomePage = () => {
           className="homepage-ranking-button"
           onClick={handleNavigate}
         >
-          View the Rankings
+          View rankings
         </Button>
       </div>
       <div id="homepage-qa-section" className="homepage-qa-section">
