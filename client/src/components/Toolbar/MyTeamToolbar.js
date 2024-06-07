@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Row, Col, Input, notification } from "antd";
+import { Spin, Button, Row, Col, Input, notification } from "antd";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { PlayersContext } from "../../context/PlayersContext";
@@ -31,6 +31,7 @@ const MyTeamToolbar = ({
   const [isVisible, setIsVisible] = useState(true);
   const [isAnimating, setIsAnimating] = useState(false);
   const [placeholder, setPlaceholder] = useState(`Max: ${playerShares}`);
+  const [isLoading, setIsLoading] = useState(false);
 
   const playerInTeamDetails =
     user && user.myTeam.find((teamPlayer) => teamPlayer.playerId === playerId);
@@ -84,6 +85,7 @@ const MyTeamToolbar = ({
   };
 
   const handleAddToTeam = async () => {
+    setIsLoading(true);
     if (!buyShareAmount) {
       notification.error({
         message: "Error",
@@ -151,12 +153,11 @@ const MyTeamToolbar = ({
         });
       }
     }
-    if (!playerId) {
-      return <div>Loading...</div>;
-    }
+    setIsLoading(false);
   };
 
   const handleSellShares = async () => {
+    setIsLoading(true);
     if (!sellShareAmount) {
       notification.error({
         message: "Error",
@@ -223,9 +224,7 @@ const MyTeamToolbar = ({
         });
       }
     }
-    if (!playerId) {
-      return <div>Loading...</div>;
-    }
+    setIsLoading(false);
   };
 
   const remainingAfterAddition = (
@@ -369,14 +368,16 @@ const MyTeamToolbar = ({
               </div>
             </div>
             <div className="toolbar-info-block">
-              <Button
-                type="primary"
-                className="continue-button"
-                onClick={mode === "buy" ? handleAddToTeam : handleSellShares}
-                disabled={teamPlayers + 1 > 60}
-              >
-                {mode === "buy" ? "Buy" : "Sell"}
-              </Button>
+              <Spin spinning={isLoading}>
+                <Button
+                  type="primary"
+                  className="continue-button"
+                  onClick={mode === "buy" ? handleAddToTeam : handleSellShares}
+                  disabled={teamPlayers + 1 > 60 || isLoading}
+                >
+                  {mode === "buy" ? "Buy" : "Sell"}
+                </Button>
+              </Spin>
             </div>
           </Col>
         </Row>

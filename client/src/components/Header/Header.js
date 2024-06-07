@@ -36,10 +36,10 @@ const Header = () => {
     navigate("/login");
   };
 
-  const handlepersonalinfo = () => {
-    setSelectedPlayer(null);
-    navigate("/profile");
-  };
+  // const handlepersonalinfo = () => {
+  //   setSelectedPlayer(null);
+  //   navigate("/profile");
+  // };
 
   const formatAvatarUrl = (url) => {
     if (url && url.startsWith("//")) {
@@ -55,9 +55,9 @@ const Header = () => {
       <button onClick={handleLogout} className="user-avatar-button-first">
         Logout
       </button>
-      <button onClick={handlepersonalinfo} className="user-avatar-button">
-        Personal Information
-      </button>
+      {/*<button onClick={handlepersonalinfo} className="user-avatar-button">*/}
+      {/*  Personal Information*/}
+      {/*</button>*/}
     </div>
   );
 
