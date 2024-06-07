@@ -5,6 +5,7 @@ import "./LoginPage.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import { Spin } from "antd";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const [showSignup, setShowSignup] = useState(false);
   const { loginUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignupClick = () => {
     setShowSignup(true);
@@ -33,6 +35,7 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -49,6 +52,7 @@ const LoginPage = () => {
       console.error("Error logging in", error);
       setError(error.response.data.message);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -80,7 +84,9 @@ const LoginPage = () => {
                 onChange={handleChange}
               />
               <a href="#">Forgot Password?</a>
-              <button type="submit">Sign In</button>
+              <button type="submit" disabled={isLoading}>
+                {isLoading ? <Spin style={{ color: "white" }} /> : "Sign In"}
+              </button>
               <div className="alternative-login">
                 <p>Or</p>
                 <button className="google-login">Sign In with Google</button>

@@ -2,20 +2,33 @@ const NBAPlayer = require("../models/nbaPlayer");
 
 const getNBAPlayers = async (req, res) => {
   try {
-    const players = await NBAPlayer.find().sort({
-      currentIndex: -1,
+    // Ensure that indexes are set for optimal query performance
+    await NBAPlayer.createIndexes({
+      currentIndex: -1, // Assuming sorting is often done on currentIndex
+      headshotUrl: 1, // Assuming this is commonly queried
     });
 
-    const filteredPlayers = players.filter((player) => {
-      const hasCurrentIndex =
-        player.currentIndex > 0 &&
-        player.currentIndex !== undefined &&
-        player.currentIndex !== null;
-      const hasImage = player.headshotUrl && player.headshotUrl.trim() !== "";
-      return hasCurrentIndex && hasImage;
-    });
+    // Execute the query with projection to limit fields returned by MongoDB
+    const players = await NBAPlayer.find(
+      {
+        currentIndex: { $gt: 0 },
+        headshotUrl: { $ne: "" },
+      },
+      {
+        playerId: 1,
+        firstName: 1,
+        lastName: 1,
+        headshotUrl: 1,
+        "currentTeam.name": 1,
+        position: 1,
+        shares: 1,
+        currentIndex: 1,
+        "seasons.length": 1, // Only retrieve the length of the seasons array if needed
+      },
+    ).sort({ currentIndex: -1 }); // Sorting by currentIndex as per the common use case
 
-    const response = filteredPlayers.map((player) => ({
+    // Map the result to format the response
+    const response = players.map((player) => ({
       _id: player._id,
       id: player.playerId,
       image: player.headshotUrl,
@@ -25,14 +38,19 @@ const getNBAPlayers = async (req, res) => {
       position: player.position,
       shares: player.shares,
       currentIndex:
-        player.seasons.length > 0
+        player.seasons && player.seasons.length > 0
           ? Number(player.currentIndex.toFixed(1))
           : null,
     }));
 
+    // Send the response with the formatted data
     res.json(response);
   } catch (err) {
-    res.status(500).send(err);
+    console.error("Error fetching NBA players:", err);
+    res.status(500).send({
+      error: "Failed to retrieve players",
+      message: err.message,
+    });
   }
 };
 

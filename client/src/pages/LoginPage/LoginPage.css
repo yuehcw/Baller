@@ -91,6 +91,13 @@
     margin-bottom: 20px;
 }
 
+.login-form button:disabled {
+    background-color: #b0c4de; /* Lighter blue, or choose another color that fits the theme */
+    cursor: not-allowed; /* Shows a not-allowed cursor on hover */
+    opacity: 0.6; /* Make the button appear faded */
+}
+
+
 .alternative-login {
     text-align: center;
 }

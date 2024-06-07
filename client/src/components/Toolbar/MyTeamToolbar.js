@@ -92,6 +92,7 @@ const MyTeamToolbar = ({
         description: "Input value can't be empty",
         placement: "top",
       });
+      setIsLoading(false);
       return;
     }
     try {
@@ -164,6 +165,7 @@ const MyTeamToolbar = ({
         description: "Input value can't be empty",
         placement: "top",
       });
+      setIsLoading(false);
       return;
     }
     try {
@@ -368,16 +370,14 @@ const MyTeamToolbar = ({
               </div>
             </div>
             <div className="toolbar-info-block">
-              <Spin spinning={isLoading}>
-                <Button
-                  type="primary"
-                  className="continue-button"
-                  onClick={mode === "buy" ? handleAddToTeam : handleSellShares}
-                  disabled={teamPlayers + 1 > 60 || isLoading}
-                >
-                  {mode === "buy" ? "Buy" : "Sell"}
-                </Button>
-              </Spin>
+              <Button
+                type="primary"
+                className="continue-button"
+                onClick={mode === "buy" ? handleAddToTeam : handleSellShares}
+                disabled={teamPlayers + 1 > 60 || isLoading}
+              >
+                {isLoading ? <Spin /> : mode === "buy" ? "Buy" : "Sell"}
+              </Button>
             </div>
           </Col>
         </Row>
