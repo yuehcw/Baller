@@ -121,11 +121,20 @@
     border: none !important;
 }
 
+.google-login:hover {
+    cursor: not-allowed;
+}
+
 .facebook-login {
     background-color: #4267b2 !important;
     color: white !important;
     border: none !important;
 }
+
+.facebook-login:hover {
+    cursor: not-allowed;
+}
+
 
 .signup-link {
     color: #007bff;

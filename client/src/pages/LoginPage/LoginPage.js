@@ -71,7 +71,7 @@ const LoginPage = () => {
               <input
                 type="email"
                 name="emailAddress"
-                placeholder="Enter your email"
+                placeholder="Test with: test@gmail.com"
                 value={formData.emailAddress}
                 onChange={handleChange}
               />
@@ -79,11 +79,11 @@ const LoginPage = () => {
               <input
                 type="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder="Test with: test"
                 value={formData.password}
                 onChange={handleChange}
               />
-              <a href="#">Forgot Password?</a>
+              <a>Forgot Password?</a>
               <button type="submit" disabled={isLoading}>
                 {isLoading ? <Spin style={{ color: "white" }} /> : "Sign In"}
               </button>
