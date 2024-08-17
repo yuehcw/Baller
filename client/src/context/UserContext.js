@@ -21,9 +21,7 @@ export const UserProvider = ({ children }) => {
   const fetchUserData = async () => {
     // setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/users/profile`,
-      );
+      const response = await axios.get(`/users/profile`);
       setUser(response.data);
       localStorage.setItem("user", JSON.stringify(response.data));
     } catch (error) {

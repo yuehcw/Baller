@@ -23,10 +23,9 @@ const PlayerCard = () => {
 
   const fetchPlayer = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/nba/nba-Players/${id}`,
-        { headers: { noAuth: true } },
-      );
+      const response = await axios.get(`/nba/nba-Players/${id}`, {
+        headers: { noAuth: true },
+      });
       setPlayer(response.data);
     } catch (error) {
       console.error("Error fetching player data:", error);

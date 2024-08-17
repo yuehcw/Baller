@@ -1,5 +1,8 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
+
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
+  console.log("Running in development mode");
 }
 
 const express = require("express");
@@ -8,10 +11,10 @@ const nbaRoutes = require("./routes/nbaRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
+// Middleware
 app.use(express.json());
-
 app.use(
   cors({
     origin: [
@@ -22,6 +25,10 @@ app.use(
   }),
 );
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+// MongoDB connection
 const mongoose = require("mongoose");
 mongoose
   .connect(process.env.DATABASE_URL)
@@ -32,10 +39,13 @@ mongoose
     console.error("Error connecting to MongoDB:", err);
   });
 
+// API routes
 app.use("/nba", nbaRoutes);
 app.use("/users", userRoutes);
-app.get("/", (req, res) => {
-  res.send("API is running");
+
+// Catch-all route to serve the React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
 
 app.listen(PORT, () => {

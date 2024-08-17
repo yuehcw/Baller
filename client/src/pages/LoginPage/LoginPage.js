@@ -38,11 +38,9 @@ const LoginPage = () => {
     setIsLoading(true);
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/login`,
-        formData,
-        { headers: { noAuth: true } },
-      );
+      const response = await axios.post(`/users/login`, formData, {
+        headers: { noAuth: true },
+      });
       console.log("Login successful", response.data);
       const { token, user } = response.data;
       localStorage.setItem("token", token);

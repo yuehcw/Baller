@@ -97,7 +97,7 @@ const MyTeamToolbar = ({
     }
     try {
       const updateSharesResponse = await axios.put(
-        `${process.env.REACT_APP_API_URL}/nba/nba-players/updateShares`,
+        `/nba/nba-players/updateShares`,
         {
           playerId: player_Id,
           newShares: -Number(buyShareAmount),
@@ -108,15 +108,12 @@ const MyTeamToolbar = ({
         throw new Error("Failed to update player shares");
       }
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/addToMyTeam`,
-        {
-          playerId: playerId,
-          playerGC: playerGC,
-          playerPrice: playerGC * Number(buyShareAmount),
-          playerShares: Number(buyShareAmount),
-        },
-      );
+      const response = await axios.post(`/users/addToMyTeam`, {
+        playerId: playerId,
+        playerGC: playerGC,
+        playerPrice: playerGC * Number(buyShareAmount),
+        playerShares: Number(buyShareAmount),
+      });
       if (response.status === 200) {
         await refreshPlayersData();
         await refreshUserData();
@@ -170,7 +167,7 @@ const MyTeamToolbar = ({
     }
     try {
       const updateSharesResponse = await axios.put(
-        `${process.env.REACT_APP_API_URL}/nba/nba-players/updateShares`,
+        `/nba/nba-players/updateShares`,
         {
           playerId: player_Id,
           newShares: Number(sellShareAmount),
@@ -182,16 +179,13 @@ const MyTeamToolbar = ({
       }
 
       const cost = transactionPlayerGC * Number(sellShareAmount);
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/users/sellFromMyTeam`,
-        {
-          playerId: playerId,
-          playerShares: Number(sellShareAmount),
-          playerPrice: playerGC * Number(sellShareAmount),
-          transactionId,
-          cost,
-        },
-      );
+      const response = await axios.put(`/users/sellFromMyTeam`, {
+        playerId: playerId,
+        playerShares: Number(sellShareAmount),
+        playerPrice: playerGC * Number(sellShareAmount),
+        transactionId,
+        cost,
+      });
       if (response.status === 200) {
         await refreshPlayersData();
         await refreshUserData();

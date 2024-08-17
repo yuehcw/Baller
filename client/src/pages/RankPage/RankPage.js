@@ -19,7 +19,7 @@ const RankingsPage = () => {
     const fetchRankings = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users/rankings?filter=${timeFrame}`,
+          `/users/rankings?filter=${timeFrame}`,
           { headers: { noAuth: true } },
         );
         console.log(response.data);

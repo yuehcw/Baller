@@ -9,9 +9,7 @@ const UserPage = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/users/profile`,
-        );
+        const response = await axios.get(`/users/profile`);
         setUser(response.data);
         setLoading(false);
       } catch (err) {

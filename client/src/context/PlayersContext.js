@@ -7,10 +7,9 @@ export const PlayersProvider = ({ children }) => {
   const [players, setPlayers] = useState([]);
   const refreshPlayersData = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/nba/nba-Players`,
-        { headers: { noAuth: true } },
-      );
+      const response = await axios.get(`/nba/nba-Players`, {
+        headers: { noAuth: true },
+      });
       console.log("Fetched players data:", response.data);
       setPlayers(response.data);
     } catch (error) {

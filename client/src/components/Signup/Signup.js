@@ -22,11 +22,9 @@ const SignupPage = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/register`,
-        formData,
-        { headers: { noAuth: true } },
-      );
+      const response = await axios.post(`/users/register`, formData, {
+        headers: { noAuth: true },
+      });
       if (response.status === 201) {
         console.log("Account created successfully", response.data);
         onClose();
