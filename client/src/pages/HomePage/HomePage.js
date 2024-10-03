@@ -179,44 +179,44 @@ const HomePage = () => {
         </div>
       </div>
       <h1 className="homepage-second-section">There's value in being a fan.</h1>
-      {/* <div className="homepage-carousel-section" ref={carouselRef}>
+      <div className="homepage-carousel-section" ref={carouselRef}>
         <div className="scrolling-images">
           {[...Array(2)].map((_, i) => (
             <React.Fragment key={i}>
-              <img src={carousel1} alt="slide-1" className="carousel-image" />
-              <img src={carousel2} alt="slide-2" className="carousel-image" />
-              <img src={carousel3} alt="slide-3" className="carousel-image" />
-              <img src={carousel4} alt="slide-4" className="carousel-image" />
-              <img src={carousel5} alt="slide-5" className="carousel-image" />
-              <img src={carousel6} alt="slide-6" className="carousel-image" />
-              <img src={carousel7} alt="slide-7" className="carousel-image" />
-              <img src={carousel8} alt="slide-8" className="carousel-image" />
-              <img src={carousel9} alt="slide-9" className="carousel-image" />
-              <img src={carousel10} alt="slide-10" className="carousel-image" />
-              <img src={carousel11} alt="slide-11" className="carousel-image" />
-              <img src={carousel12} alt="slide-12" className="carousel-image" />
-              <img src={carousel13} alt="slide-13" className="carousel-image" />
-              <img src={carousel14} alt="slide-14" className="carousel-image" />
-              <img src={carousel15} alt="slide-15" className="carousel-image" />
-              <img src={carousel1} alt="slide-1" className="carousel-image" />
-              <img src={carousel2} alt="slide-2" className="carousel-image" />
-              <img src={carousel3} alt="slide-3" className="carousel-image" />
-              <img src={carousel4} alt="slide-4" className="carousel-image" />
-              <img src={carousel5} alt="slide-5" className="carousel-image" />
-              <img src={carousel6} alt="slide-6" className="carousel-image" />
-              <img src={carousel7} alt="slide-7" className="carousel-image" />
-              <img src={carousel8} alt="slide-8" className="carousel-image" />
-              <img src={carousel9} alt="slide-9" className="carousel-image" />
-              <img src={carousel10} alt="slide-10" className="carousel-image" />
-              <img src={carousel11} alt="slide-11" className="carousel-image" />
-              <img src={carousel12} alt="slide-12" className="carousel-image" />
-              <img src={carousel13} alt="slide-13" className="carousel-image" />
-              <img src={carousel14} alt="slide-14" className="carousel-image" />
-              <img src={carousel15} alt="slide-15" className="carousel-image" />
+              <img src={carousel1} loading="lazy" alt="slide-1" className="carousel-image" />
+              <img src={carousel2} loading="lazy" alt="slide-2" className="carousel-image" />
+              <img src={carousel3} loading="lazy" alt="slide-3" className="carousel-image" />
+              <img src={carousel4} loading="lazy" alt="slide-4" className="carousel-image" />
+              <img src={carousel5} loading="lazy" alt="slide-5" className="carousel-image" />
+              <img src={carousel6} loading="lazy" alt="slide-6" className="carousel-image" />
+              <img src={carousel7} loading="lazy" alt="slide-7" className="carousel-image" />
+              <img src={carousel8} loading="lazy" alt="slide-8" className="carousel-image" />
+              <img src={carousel9} loading="lazy" alt="slide-9" className="carousel-image" />
+              <img src={carousel10} loading="lazy" alt="slide-10" className="carousel-image" />
+              <img src={carousel11} loading="lazy" alt="slide-11" className="carousel-image" />
+              <img src={carousel12} loading="lazy" alt="slide-12" className="carousel-image" />
+              <img src={carousel13} loading="lazy" alt="slide-13" className="carousel-image" />
+              <img src={carousel14} loading="lazy" alt="slide-14" className="carousel-image" />
+              <img src={carousel15} loading="lazy" alt="slide-15" className="carousel-image" />
+              <img src={carousel1} loading="lazy" alt="slide-1" className="carousel-image" />
+              <img src={carousel2} loading="lazy" alt="slide-2" className="carousel-image" />
+              <img src={carousel3} loading="lazy" alt="slide-3" className="carousel-image" />
+              <img src={carousel4} loading="lazy" alt="slide-4" className="carousel-image" />
+              <img src={carousel5} loading="lazy" alt="slide-5" className="carousel-image" />
+              <img src={carousel6} loading="lazy" alt="slide-6" className="carousel-image" />
+              <img src={carousel7} loading="lazy" alt="slide-7" className="carousel-image" />
+              <img src={carousel8} loading="lazy" alt="slide-8" className="carousel-image" />
+              <img src={carousel9} loading="lazy" alt="slide-9" className="carousel-image" />
+              <img src={carousel10} loading="lazy" alt="slide-10" className="carousel-image" />
+              <img src={carousel11} loading="lazy" alt="slide-11" className="carousel-image" />
+              <img src={carousel12} loading="lazy" alt="slide-12" className="carousel-image" />
+              <img src={carousel13} loading="lazy" alt="slide-13" className="carousel-image" />
+              <img src={carousel14} loading="lazy" alt="slide-14" className="carousel-image" />
+              <img src={carousel15} loading="lazy" alt="slide-15" className="carousel-image" />
             </React.Fragment>
           ))}
         </div>
-      </div> */}
+      </div>
       <div className="homepage-carousel-section-paragraph">
         <p>
           Keep an eye on player performance and market trends to sell your
